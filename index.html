@@ -5,6 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#16324F">
 <meta name="description" content="Balance: organiza tus tareas, ingresos, gastos y metas de ahorro en un solo panel.">
+<!-- Vista previa al compartir el enlace (WhatsApp, Facebook, LinkedIn, X, Telegram…) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Balance">
+<meta property="og:locale" content="es_CO">
+<meta property="og:url" content="https://balance-nine-olive.vercel.app">
+<meta property="og:title" content="Balance — Equilibra tu dinero, organiza tu vida">
+<meta property="og:description" content="Tus tareas, ingresos, gastos, metas de ahorro y calendario de Google en un solo panel. Pruébalo desde tu celular o tu computador.">
+<meta property="og:image" content="https://balance-nine-olive.vercel.app/og-image.png">
+<meta property="og:image:secure_url" content="https://balance-nine-olive.vercel.app/og-image.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Balance: una balanza en equilibrio con el lema "Equilibra tu dinero, organiza tu vida"">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Balance — Equilibra tu dinero, organiza tu vida">
+<meta name="twitter:description" content="Tus tareas, ingresos, gastos, metas de ahorro y calendario de Google en un solo panel. Pruébalo desde tu celular o tu computador.">
+<meta name="twitter:image" content="https://balance-nine-olive.vercel.app/og-image.png">
+<meta name="twitter:image:alt" content="Balance: una balanza en equilibrio con el lema "Equilibra tu dinero, organiza tu vida"">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 40 40%27%3E%3Crect width=%2740%27 height=%2740%27 rx=%278%27 fill=%27%2316324F%27/%3E%3Ccircle cx=%2720%27 cy=%2720%27 r=%278%27 fill=%27%23E8873A%27/%3E%3C/svg%3E">
 <title>Balance — Equilibra tu dinero, organiza tu vida</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -444,6 +462,343 @@
     .cal-chip{font-size:0; height:6px; width:6px; padding:0; display:inline-block; border-radius:50%; margin:2px 2px 0 0;}
     .cal-more{display:none;}
   }
+
+  /* ======================================================================
+     PRESENTACION v2 — solo apariencia de #site-view. No afecta la app.
+     ====================================================================== */
+  #site-view{--lp-line:#E6E3DA; --lp-shadow:0 1px 2px rgba(15,36,57,.05),0 10px 30px rgba(15,36,57,.07); --lp-blue:#3A6EA5; --lp-blue-soft:#E3ECF5; --lp-or-soft:#FDEBD8;}
+  #site-view .lp-sec{padding:96px 0; scroll-margin-top:72px; background:var(--cream);}
+  #site-view .lp-sec.lp-white{background:#fff; border-top:1px solid var(--lp-line); border-bottom:1px solid var(--lp-line);}
+  #site-view .lp-sec.lp-dark{background:linear-gradient(165deg,#0F2439 0%,#16324F 100%); color:#fff; border:0;}
+  #site-view section.lp-hero,#site-view section.lp-cta{scroll-margin-top:72px;}
+
+  /* nav */
+  #site-view header.site{background:rgba(250,247,241,.86); backdrop-filter:saturate(1.4) blur(12px); -webkit-backdrop-filter:saturate(1.4) blur(12px);}
+  #site-view .nav{padding:13px 32px;}
+  #site-view .nav .right{display:flex; align-items:center; gap:8px;}
+  #site-view .navlinks{gap:4px;}
+  #site-view .navlinks a{opacity:1; color:var(--navy-2); padding:8px 12px; border-radius:8px; font-weight:500;}
+  #site-view .navlinks a:hover{background:rgba(22,50,79,.07); color:var(--navy);}
+  #site-view .nav-cta{border-radius:10px; padding:10px 18px; box-shadow:0 1px 2px rgba(15,36,57,.2);}
+
+  /* botones */
+  #site-view .lp-btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:48px; padding:0 26px; border-radius:12px; font-weight:600; font-size:.98rem; text-decoration:none; transition:transform .15s, background .15s, border-color .15s, box-shadow .15s;}
+  #site-view .lp-btn.primary{background:var(--orange); color:#1a1408; box-shadow:0 6px 20px rgba(232,135,58,.35);}
+  #site-view .lp-btn.primary:hover{background:#f19a4f; transform:translateY(-1px);}
+  #site-view .lp-btn.ghost{background:rgba(255,255,255,.06); color:#fff; border:1px solid rgba(255,255,255,.28);}
+  #site-view .lp-btn.ghost:hover{border-color:rgba(255,255,255,.6); background:rgba(255,255,255,.1);}
+
+  /* hero */
+  #site-view .lp-hero{position:relative; overflow:hidden; color:#fff; padding:0;
+    background:radial-gradient(900px 480px at 88% -10%, rgba(232,135,58,.30), transparent 60%), radial-gradient(700px 420px at -8% 110%, rgba(46,155,111,.24), transparent 60%), linear-gradient(160deg,#16324F 0%,#0F2439 100%);}
+  #site-view .lp-hero::after{content:""; position:absolute; inset:0; pointer-events:none;
+    background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px); background-size:48px 48px;
+    -webkit-mask-image:linear-gradient(to bottom,#000 0%,transparent 80%); mask-image:linear-gradient(to bottom,#000 0%,transparent 80%);}
+  #site-view .lp-hero-inner{position:relative; z-index:1; max-width:1120px; margin:0 auto; padding:92px 32px 100px; display:grid; grid-template-columns:1.1fr .9fr; gap:56px; align-items:center;}
+  #site-view .lp-badge{display:inline-flex; align-items:center; gap:8px; padding:6px 14px; border-radius:999px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); font-size:.8rem; font-weight:600; color:#E8EEF5;}
+  #site-view .lp-badge i{width:7px; height:7px; border-radius:50%; background:var(--orange); box-shadow:0 0 0 4px rgba(232,135,58,.25);}
+  #site-view .lp-hero h1{color:#fff; font-size:clamp(2.4rem,5.2vw,3.8rem); line-height:1.05; letter-spacing:-.02em; margin-top:22px;}
+  #site-view .lp-hl{background:linear-gradient(90deg,#F4A560,#E8873A); -webkit-background-clip:text; background-clip:text; color:transparent;}
+  #site-view .lp-hero .lead{color:#C8D3E0; font-size:1.12rem; margin-top:20px; max-width:50ch;}
+  #site-view .lp-cta-row{display:flex; gap:12px; margin-top:34px; flex-wrap:wrap;}
+  #site-view .lp-trust{list-style:none; display:flex; flex-wrap:wrap; gap:10px 22px; margin-top:34px; font-size:.84rem; color:#B8C6D6;}
+  #site-view .lp-trust li{display:flex; align-items:center; gap:8px;}
+  #site-view .lp-trust svg{width:18px; height:18px; color:#F4A560; flex:none;}
+  #site-view .lp-scale{background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.14); border-radius:22px; padding:22px 24px 22px; box-shadow:0 24px 60px rgba(0,0,0,.28); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);}
+  #site-view .lp-scale-top{display:flex; justify-content:space-between; align-items:center; font-size:.8rem; color:#A9B7C8; margin-bottom:4px;}
+  #site-view .lp-scale-top strong{color:#fff; font-family:'Space Grotesk'; font-size:.95rem;}
+
+  /* encabezados de seccion */
+  #site-view .lp-head{max-width:680px; margin:0 auto 56px; text-align:center;}
+  #site-view .lp-head h2,#site-view .lp-h2{font-size:clamp(1.8rem,3.4vw,2.6rem); line-height:1.12; letter-spacing:-.015em;}
+  #site-view .lp-head p,#site-view .lp-p{color:var(--gray); font-size:1.05rem; margin-top:16px;}
+  #site-view .lp-kicker{display:inline-block; font-size:.76rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--orange-dark); margin-bottom:14px;}
+  #site-view .lp-kicker.light{color:#F4A560;}
+  #site-view .lp-h2.light{color:#fff;}
+  #site-view .lp-p.light{color:#B8C6D6;}
+  #site-view .lp-note{text-align:center; margin-top:22px; color:var(--gray); font-size:.85rem;}
+  #site-view .lp-note a{color:var(--orange-dark); font-weight:600;}
+  #site-view .lp-split{display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center;}
+
+  /* ventana de ejemplo */
+  #site-view .lp-window{background:#fff; border:1px solid var(--lp-line); border-radius:20px; box-shadow:0 30px 80px rgba(15,36,57,.16); overflow:hidden; max-width:1020px; margin:0 auto; text-align:left;}
+  #site-view .lp-win-bar{display:flex; align-items:center; gap:7px; padding:12px 16px; background:var(--cream); border-bottom:1px solid var(--lp-line);}
+  #site-view .lp-win-bar i{width:10px; height:10px; border-radius:50%; background:#DAD6CA;}
+  #site-view .lp-url{margin-left:12px; flex:1; max-width:340px; background:#fff; border:1px solid var(--lp-line); border-radius:8px; padding:4px 12px; font-size:.74rem; color:var(--gray); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  #site-view .lp-win-body{display:grid; grid-template-columns:1.15fr 1fr; gap:18px; padding:20px; background:var(--cream);}
+  #site-view .lp-col{display:flex; flex-direction:column; gap:18px; min-width:0;}
+  #site-view .lp-stats{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px;}
+  #site-view .lp-stat{background:#fff; border:1px solid var(--lp-line); border-radius:14px; padding:14px;}
+  #site-view .lp-stat small{display:block; font-size:.7rem; font-weight:600; color:var(--gray);}
+  #site-view .lp-stat strong{display:block; font-family:'Space Grotesk'; font-size:1.3rem; color:var(--navy); margin-top:4px;}
+  #site-view .lp-stat strong.pos{color:var(--green);}
+  #site-view .lp-stat em{display:block; font-style:normal; font-size:.66rem; color:var(--gray-light); margin-top:3px; line-height:1.35;}
+  #site-view .lp-bar{height:6px; border-radius:6px; background:var(--lp-line); margin-top:10px; overflow:hidden;}
+  #site-view .lp-bar b{display:block; height:100%; background:var(--green); border-radius:6px;}
+  #site-view .lp-card-in{background:#fff; border:1px solid var(--lp-line); border-radius:14px; padding:16px; min-width:0;}
+  #site-view .lp-card-in h4{font-size:.92rem;}
+  #site-view .lp-tasks{list-style:none; margin-top:8px;}
+  #site-view .lp-tasks li{display:flex; align-items:center; gap:10px; padding:9px 0; border-bottom:1px solid var(--lp-line); font-size:.82rem; color:var(--navy);}
+  #site-view .lp-tasks li:last-child{border-bottom:0;}
+  #site-view .lp-tasks .t{flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  #site-view .lp-tasks li.done .t{text-decoration:line-through; color:var(--gray-light);}
+  #site-view .lp-box{width:16px; height:16px; border-radius:5px; border:1.8px solid #C5C9D0; flex:none; display:grid; place-items:center;}
+  #site-view .lp-box.on{background:var(--green); border-color:var(--green); color:#fff;}
+  #site-view .lp-box svg{width:11px; height:11px; stroke-width:3;}
+  #site-view .lp-pill{font-size:.64rem; font-weight:700; padding:2px 8px; border-radius:999px; flex:none;}
+  #site-view .lp-pill.hi{background:#FBE4E2; color:var(--red);}
+  #site-view .lp-pill.md{background:var(--lp-or-soft); color:var(--orange-dark);}
+  #site-view .lp-pill.lo{background:var(--green-light); color:var(--green);}
+  #site-view .lp-mc-head{display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;}
+  #site-view .lp-sync{display:inline-flex; align-items:center; gap:5px; font-size:.64rem; font-weight:600; color:var(--green); background:var(--green-light); padding:3px 9px; border-radius:999px;}
+  #site-view .lp-sync svg{width:12px; height:12px;}
+  #site-view .lp-mc-month{font-family:'Space Grotesk'; font-weight:600; font-size:.82rem; color:var(--navy); margin:10px 0 6px;}
+  #site-view .lp-mc-grid{display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:2px;}
+  #site-view .lp-dow{font-size:.6rem; font-weight:700; color:var(--gray-light); text-align:center; padding:2px 0;}
+  #site-view .lp-cc{aspect-ratio:1/.9; border-radius:7px; font-size:.66rem; color:var(--navy); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;}
+  #site-view .lp-cc.out{color:#B9BDC6;}
+  #site-view .lp-cc.sel{background:var(--navy); color:#fff;}
+  #site-view .dots{display:flex; gap:2px; height:5px;}
+  #site-view .dots b{width:5px; height:5px; border-radius:50%; background:var(--orange);}
+  #site-view .dots b.g{background:var(--lp-blue);}
+  #site-view .lp-cc.sel .dots b.g{background:#9CC0E8;}
+  #site-view .lp-mc-list{list-style:none; margin-top:10px; border-top:1px solid var(--lp-line);}
+  #site-view .lp-mc-list li{display:flex; align-items:center; gap:8px; padding:8px 0; font-size:.76rem; color:var(--navy); border-bottom:1px solid var(--lp-line);}
+  #site-view .lp-mc-list li:last-child{border-bottom:0; padding-bottom:0;}
+  #site-view .lp-mc-list span{flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  #site-view .lp-mc-list em{font-style:normal; font-size:.62rem; font-weight:700; color:var(--gray); background:var(--cream); padding:2px 7px; border-radius:999px; flex:none;}
+  #site-view .lp-mc-list i,#site-view .lp-sync-list i{width:8px; height:8px; border-radius:50%; flex:none; background:var(--orange);}
+  #site-view .lp-mc-list i.g,#site-view .lp-sync-list i.g{background:var(--lp-blue);}
+
+  /* problema */
+  #site-view .lp-pains{list-style:none; display:grid; gap:12px;}
+  #site-view .lp-pains li{display:flex; align-items:center; gap:14px; background:#fff; border:1px solid var(--lp-line); border-radius:14px; padding:16px 18px; font-size:.95rem; color:var(--navy-2); box-shadow:var(--lp-shadow);}
+  #site-view .lp-pains svg{width:26px; height:26px; flex:none; color:var(--orange-dark); background:var(--lp-or-soft); padding:5px; border-radius:9px;}
+
+  /* funciones */
+  #site-view .lp-feats{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px;}
+  #site-view .lp-feat{background:var(--cream); border:1px solid var(--lp-line); border-radius:18px; padding:26px; transition:transform .18s, box-shadow .18s;}
+  #site-view .lp-feat:hover{transform:translateY(-3px); box-shadow:var(--lp-shadow);}
+  #site-view .lp-feat h3{font-size:1.1rem; margin-top:18px;}
+  #site-view .lp-feat p{font-size:.92rem; color:var(--gray); margin-top:8px;}
+  #site-view .lp-ico{width:46px; height:46px; border-radius:13px; display:grid; place-items:center; flex:none;}
+  #site-view .lp-ico svg{width:24px; height:24px;}
+  #site-view .lp-ico.o{background:var(--lp-or-soft); color:var(--orange-dark);}
+  #site-view .lp-ico.g{background:var(--green-light); color:var(--green);}
+  #site-view .lp-ico.b{background:var(--lp-blue-soft); color:var(--lp-blue);}
+
+  /* calendario */
+  #site-view .lp-checks{list-style:none; display:grid; gap:14px; margin-top:26px;}
+  #site-view .lp-checks li{display:flex; gap:12px; font-size:.95rem; color:#C8D3E0;}
+  #site-view .lp-checks li strong{color:#fff;}
+  #site-view .lp-checks svg{width:22px; height:22px; flex:none; color:#6FD0A5; background:rgba(46,155,111,.18); padding:4px; border-radius:50%; margin-top:1px;}
+  #site-view .lp-fine{margin-top:22px; font-size:.78rem; color:#8DA0BA;}
+  #site-view .lp-sync-card{background:#fff; color:var(--navy); border-radius:22px; padding:26px; box-shadow:0 30px 70px rgba(0,0,0,.35);}
+  #site-view .lp-sync-row{display:flex; align-items:center; justify-content:space-between; gap:10px;}
+  #site-view .lp-node{display:flex; flex-direction:column; align-items:center; text-align:center; gap:4px; flex:1; min-width:0;}
+  #site-view .lp-node strong{font-family:'Space Grotesk'; font-size:.95rem; margin-top:8px;}
+  #site-view .lp-node small{font-size:.72rem; color:var(--gray);}
+  #site-view .lp-arrows svg{width:34px; height:34px; color:var(--orange-dark);}
+  #site-view .lp-sync-list{list-style:none; margin-top:22px; border-top:1px solid var(--lp-line);}
+  #site-view .lp-sync-list li{display:flex; align-items:center; gap:10px; padding:12px 0; border-bottom:1px solid var(--lp-line); font-size:.85rem;}
+  #site-view .lp-sync-list span{flex:1; min-width:0; font-weight:500;}
+  #site-view .lp-sync-list em{font-style:normal; font-size:.7rem; color:var(--gray);}
+  #site-view .lp-sync-list b{width:18px; height:18px; border-radius:50%; background:var(--green-light); color:var(--green); display:grid; place-items:center; flex:none;}
+  #site-view .lp-sync-list b svg{width:11px; height:11px; stroke-width:3;}
+  #site-view .lp-sync-foot{display:flex; align-items:center; justify-content:center; gap:8px; margin-top:16px; font-size:.78rem; color:var(--green); font-weight:600;}
+  #site-view .lp-sync-foot svg{width:15px; height:15px;}
+
+  /* acceso */
+  #site-view .lp-access{display:grid; grid-template-columns:1.1fr .9fr; gap:28px; align-items:start;}
+  #site-view .lp-steps{list-style:none; background:#fff; border:1px solid var(--lp-line); border-radius:20px; padding:12px 26px; box-shadow:var(--lp-shadow);}
+  #site-view .lp-steps li{display:flex; gap:16px; padding:20px 0; border-bottom:1px solid var(--lp-line);}
+  #site-view .lp-steps li:last-child{border-bottom:0;}
+  #site-view .lp-steps .n{width:34px; height:34px; border-radius:50%; background:var(--navy); color:#fff; display:grid; place-items:center; font-family:'Space Grotesk'; font-weight:700; flex:none;}
+  #site-view .lp-steps h3{font-size:1.02rem;}
+  #site-view .lp-steps p{font-size:.9rem; color:var(--gray); margin-top:4px;}
+  #site-view .lp-link-chip{display:inline-flex; align-items:center; gap:8px; margin-top:12px; max-width:100%; padding:8px 14px; border-radius:10px; background:var(--cream); border:1px solid var(--lp-line); font-size:.82rem; font-weight:600; color:var(--navy); text-decoration:none; overflow-wrap:anywhere;}
+  #site-view .lp-link-chip svg{width:16px; height:16px; color:var(--orange-dark); flex:none;}
+  #site-view .lp-link-chip:hover{border-color:var(--navy);}
+  #site-view .lp-acc-cards{display:grid; gap:14px;}
+  #site-view .lp-mini{display:flex; gap:14px; background:#fff; border:1px solid var(--lp-line); border-radius:16px; padding:18px; box-shadow:var(--lp-shadow);}
+  #site-view .lp-mini > svg{width:42px; height:42px; padding:9px; border-radius:12px; background:var(--lp-blue-soft); color:var(--lp-blue); flex:none;}
+  #site-view .lp-mini h3{font-size:.98rem;}
+  #site-view .lp-mini p{font-size:.86rem; color:var(--gray); margin-top:3px;}
+
+  /* usuarios */
+  #site-view .lp-users{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:18px;}
+  #site-view .lp-user{background:var(--cream); border:1px solid var(--lp-line); border-radius:18px; padding:24px;}
+  #site-view .lp-user > svg{width:42px; height:42px; padding:9px; border-radius:12px; background:var(--lp-or-soft); color:var(--orange-dark);}
+  #site-view .lp-user h3{font-size:1.08rem; margin-top:16px;}
+  #site-view .lp-user .need{font-size:.88rem; color:var(--navy-2); margin-top:8px;}
+  #site-view .lp-user .ben{font-size:.82rem; color:var(--gray); margin-top:10px; padding-top:10px; border-top:1px dashed var(--lp-line);}
+
+  /* alcance */
+  #site-view .lp-scope{display:grid; grid-template-columns:1.5fr 1fr; gap:20px; align-items:stretch;}
+  #site-view .lp-scope-card{background:#fff; border:1px solid var(--lp-line); border-radius:20px; padding:28px;}
+  #site-view .lp-scope-card h3{display:flex; align-items:center; gap:10px; font-size:1.08rem;}
+  #site-view .lp-scope-card h3 svg{width:24px; height:24px; padding:4px; border-radius:50%; flex:none;}
+  #site-view .lp-scope-card.yes h3 svg{background:var(--green-light); color:var(--green);}
+  #site-view .lp-scope-card.no h3{color:var(--gray);}
+  #site-view .lp-scope-card.no h3 svg{background:#EEF0F3; color:var(--gray);}
+  #site-view .lp-tags{list-style:none; display:flex; flex-wrap:wrap; gap:8px; margin-top:20px;}
+  #site-view .lp-tags li{font-size:.8rem; font-weight:500; color:var(--navy-2); background:var(--cream); border:1px solid var(--lp-line); padding:6px 12px; border-radius:999px;}
+  #site-view .lp-nolist{list-style:none; margin-top:14px;}
+  #site-view .lp-nolist li{font-size:.88rem; color:var(--gray); padding:11px 0 11px 22px; border-bottom:1px solid var(--lp-line); position:relative;}
+  #site-view .lp-nolist li:last-child{border-bottom:0;}
+  #site-view .lp-nolist li::before{content:"–"; position:absolute; left:2px; color:var(--gray-light); font-weight:700;}
+
+  /* cta */
+  #site-view .lp-cta{padding:96px 0; text-align:center; color:#fff; position:relative; overflow:hidden;
+    background:radial-gradient(700px 320px at 50% 120%, rgba(232,135,58,.35), transparent 60%), linear-gradient(120deg,#16324F 0%,#1F4568 100%);}
+  #site-view .lp-cta h2{color:#fff; font-size:clamp(1.8rem,3.6vw,2.7rem); letter-spacing:-.015em;}
+  #site-view .lp-cta p{color:#C8D3E0; margin:14px auto 0; max-width:48ch; font-size:1.05rem;}
+  #site-view .lp-cta .lp-btn{margin-top:30px;}
+
+  /* responsive */
+  @media (min-width:1400px){ #site-view .lp-hero-inner{max-width:1240px;} }
+  @media (max-width:1000px){
+    #site-view .lp-feats{grid-template-columns:repeat(2,minmax(0,1fr));}
+    #site-view .lp-users{grid-template-columns:repeat(2,minmax(0,1fr));}
+  }
+  @media (max-width:900px){
+    #site-view .lp-hero-inner{grid-template-columns:1fr; padding:64px 24px 72px; gap:40px;}
+    #site-view .lp-split,#site-view .lp-access,#site-view .lp-scope{grid-template-columns:1fr; gap:32px;}
+    #site-view .lp-win-body{grid-template-columns:1fr;}
+    #site-view .lp-sec{padding:72px 0;}
+    #site-view .lp-head{margin-bottom:40px;}
+  }
+  @media (max-width:640px){
+    #site-view .nav{padding:12px 20px;}
+    #site-view .lp-feats,#site-view .lp-users{grid-template-columns:1fr;}
+    #site-view .lp-stats{grid-template-columns:1fr;}
+    #site-view .lp-stat{display:grid; grid-template-columns:1fr auto; align-items:center; gap:2px 12px;}
+    #site-view .lp-stat small,#site-view .lp-stat em,#site-view .lp-bar{grid-column:1 / -1;}
+    #site-view .lp-win-body{padding:12px; gap:12px;}
+    #site-view .lp-sec{padding:60px 0;}
+    #site-view .lp-cta{padding:68px 0;}
+    #site-view .lp-cta-row .lp-btn{flex:1 1 100%;}
+    #site-view .lp-sync-card{padding:20px;}
+    #site-view .lp-steps{padding:6px 18px;}
+    #site-view .lp-scope-card{padding:22px;}
+  }
+  @media (prefers-reduced-motion:reduce){ #site-view .lp-feat,#site-view .lp-btn{transition:none;} #site-view .lp-feat:hover{transform:none;} }
+</style>
+<style id="v7-visual">
+  /* =====================================================================
+     v7 — SOLO APARIENCIA. Inicio de sesión, barra superior y bienvenida.
+     No contiene lógica. Todo está acotado a #app-view.
+     ===================================================================== */
+
+  /* ---- Barra superior de la app (misma identidad que el hero) ---- */
+  #app-view .app-topbar{
+    padding:13px 32px;
+    background:
+      radial-gradient(520px 170px at 94% -70%, rgba(232,135,58,.34), transparent 70%),
+      radial-gradient(420px 150px at 0% 170%, rgba(46,155,111,.24), transparent 70%),
+      linear-gradient(160deg,#16324F 0%,#0F2439 100%);
+    border-bottom:2px solid;
+    border-image:linear-gradient(90deg,#2E9B6F 0%,#E8873A 55%,rgba(232,135,58,0) 100%) 1;
+    box-shadow:0 8px 28px rgba(15,36,57,.18);
+  }
+  #app-view .app-topbar .brand{gap:11px; font-size:1.2rem; letter-spacing:-.01em;}
+  #app-view .app-topbar .brand .mark{
+    width:36px; height:36px; padding:6px; border-radius:11px;
+    background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.16);
+  }
+  #app-view .app-topbar .back{
+    color:#fff; font-weight:600; font-size:.86rem;
+    padding:9px 16px; border-radius:10px;
+    background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.28);
+    transition:background .15s, border-color .15s;
+  }
+  #app-view .app-topbar .back:hover{background:rgba(255,255,255,.12); border-color:rgba(255,255,255,.6); color:#fff;}
+
+  /* ---- Pantalla de inicio de sesión ---- */
+  #app-view:has(#dash-view[style*="display:none"]),
+  #app-view:has(#dash-view[style*="display: none"]){
+    background:
+      radial-gradient(900px 480px at 88% -10%, rgba(232,135,58,.30), transparent 60%),
+      radial-gradient(700px 420px at -8% 110%, rgba(46,155,111,.24), transparent 60%),
+      linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px) 0 0/48px 48px,
+      linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px) 0 0/48px 48px,
+      linear-gradient(160deg,#16324F 0%,#0F2439 100%);
+  }
+  #app-view .gate{
+    max-width:440px; margin:64px auto; padding:40px 34px 34px;
+    border-radius:22px; border:1px solid rgba(255,255,255,.14);
+    box-shadow:0 30px 80px rgba(0,0,0,.32), 0 2px 6px rgba(15,36,57,.12);
+  }
+  #app-view .gate .mark{
+    width:64px; height:64px; padding:11px; margin:0 auto 20px; border-radius:18px;
+    background:linear-gradient(145deg,#F6F8FB,#E3ECF5); border:1px solid #E6E3DA;
+    box-shadow:0 8px 22px rgba(15,36,57,.10);
+  }
+  #app-view .gate h2{font-size:1.65rem; line-height:1.15; letter-spacing:-.015em;}
+  #app-view .gate h2::before{
+    content:"Tu espacio personal"; display:block; margin-bottom:10px;
+    font-family:'Inter',sans-serif; font-size:.72rem; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--orange-dark);
+  }
+  #app-view .gate p{font-size:.95rem; line-height:1.55;}
+  #app-view .gate input{
+    min-height:50px; padding:13px 16px; border-radius:12px; background:var(--cream);
+    border:1px solid var(--border); transition:border-color .15s, box-shadow .15s, background .15s;
+  }
+  #app-view .gate input:focus{outline:none; background:#fff; border-color:var(--orange); box-shadow:0 0 0 4px rgba(232,135,58,.20);}
+  #app-view .gate button{min-height:50px; border-radius:12px; font-size:.98rem; transition:transform .15s, background .15s, border-color .15s, box-shadow .15s;}
+  #app-view .gate #btnSignIn{background:var(--orange); color:#1a1408; box-shadow:0 6px 20px rgba(232,135,58,.35); margin-top:18px;}
+  #app-view .gate #btnSignIn:hover{background:#f19a4f; transform:translateY(-1px);}
+  #app-view .gate #btnSignUp:hover{background:var(--cream) !important; border-color:var(--navy-2) !important;}
+
+  @media (max-width:560px){
+    #app-view .gate{max-width:none; margin:28px 16px; padding:32px 20px 26px;}
+  }
+  @media (max-width:760px){
+    #app-view .app-topbar{padding:11px 18px;}
+    #app-view .app-topbar .back{padding:8px 13px; font-size:.82rem;}
+  }
+  @media (orientation:landscape) and (max-height:520px){
+    #app-view .app-topbar{padding:8px 24px;}
+    #app-view .gate{margin:16px auto; padding:26px 28px;}
+    #app-view .gate .mark{width:48px; height:48px; padding:8px; margin-bottom:12px;}
+  }
+  @media (pointer:coarse){ #app-view .app-topbar .back{min-height:44px;} }
+
+  /* ---- Bienvenida para quien entra por primera vez ---- */
+  #app-view .wc{
+    position:relative; overflow:hidden; color:#fff; border-radius:22px; padding:30px 30px 22px; margin-bottom:28px;
+    background:
+      radial-gradient(520px 260px at 96% -20%, rgba(232,135,58,.34), transparent 62%),
+      radial-gradient(420px 240px at -6% 120%, rgba(46,155,111,.26), transparent 62%),
+      linear-gradient(160deg,#16324F 0%,#0F2439 100%);
+    box-shadow:0 18px 50px rgba(15,36,57,.22);
+    animation:wcIn .45s ease both;
+  }
+  #app-view .wc[hidden]{display:none;}
+  @keyframes wcIn{from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:none;}}
+  #app-view .wc-kicker{display:inline-flex; align-items:center; gap:8px; padding:5px 13px; border-radius:999px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); font-size:.76rem; font-weight:600; color:#E8EEF5;}
+  #app-view .wc-kicker i{width:7px; height:7px; border-radius:50%; background:var(--orange); box-shadow:0 0 0 4px rgba(232,135,58,.25);}
+  #app-view .wc h2{color:#fff; font-size:clamp(1.45rem,2.8vw,2rem); letter-spacing:-.015em; line-height:1.12; margin-top:14px; padding-right:44px;}
+  #app-view .wc h2 em{font-style:normal; background:linear-gradient(90deg,#F4A560,#E8873A); -webkit-background-clip:text; background-clip:text; color:transparent;}
+  #app-view .wc-lead{color:#C8D3E0; margin-top:8px; max-width:58ch; font-size:.97rem;}
+  #app-view .wc-steps{list-style:none; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; margin-top:22px;}
+  #app-view .wc-step{display:flex; flex-direction:column; gap:10px; padding:18px; border-radius:16px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.14);}
+  #app-view .wc-top{display:flex; align-items:center; justify-content:space-between;}
+  #app-view .wc-n{width:30px; height:30px; border-radius:50%; display:grid; place-items:center; background:var(--orange); color:#1a1408; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:.9rem;}
+  #app-view .wc-top svg{width:24px; height:24px; color:#F4A560;}
+  #app-view .wc-step strong{display:block; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:1.02rem; color:#fff;}
+  #app-view .wc-step .d{display:block; margin-top:3px; color:#B8C6D6; font-size:.86rem; line-height:1.45;}
+  #app-view .wc-go{margin-top:auto; align-self:flex-start; padding:8px 14px; min-height:36px; border-radius:10px; background:rgba(255,255,255,.10); color:#fff; border:1px solid rgba(255,255,255,.28); font-size:.82rem; font-weight:600; transition:background .15s, border-color .15s;}
+  #app-view .wc-go:hover{background:rgba(255,255,255,.18); border-color:rgba(255,255,255,.55);}
+  #app-view .wc-close{position:absolute; top:14px; right:14px; width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,.08); color:#E8EEF5; font-size:1.3rem; line-height:1;}
+  #app-view .wc-close:hover{background:rgba(255,255,255,.16);}
+  #app-view .wc-foot{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-top:16px;}
+  #app-view .wc-foot small{color:#A9B7C8; font-size:.8rem;}
+  #app-view .wc-skip{background:none; color:#F4A560; font-weight:600; font-size:.86rem; text-decoration:underline; padding:8px 4px;}
+  #app-view .wc button:focus-visible{outline:2px solid var(--orange); outline-offset:2px;}
+  @media (max-width:900px){ #app-view .wc-steps{grid-template-columns:1fr;} }
+  @media (max-width:760px){ #app-view .wc{padding:24px 18px 18px; border-radius:18px; margin-bottom:22px;} }
+  @media (pointer:coarse){ #app-view .wc-go,#app-view .wc-skip{min-height:44px;} #app-view .wc-close{width:44px; height:44px; top:10px; right:10px;} }
 </style>
 </head>
 <body>
@@ -465,27 +820,35 @@
       Balance
     </div>
     <div class="navlinks">
-      <a href="#problema">El problema</a>
+      <a href="#funciones">Funciones</a>
+      <a href="#calendario">Calendario</a>
+      <a href="#acceso">Acceso</a>
       <a href="#usuarios">Para quién</a>
-      <a href="#funciones">Qué incluye</a>
       <a href="#alcance">Versión beta</a>
     </div>
     <div class="right"><button class="nav-cta" onclick="openApp()">Probar Balance</button><button class="menu-btn" aria-label="Abrir menú" onclick="toggleMenu()">☰</button></div>
   </nav>
 </header>
 
-<section class="hero">
-  <div class="hero-inner">
+<!-- HERO -->
+<section class="lp-hero">
+  <div class="lp-hero-inner">
     <div>
-      <div class="eyebrow">Organización personal · finanzas y tareas</div>
-      <h1>Equilibra tu dinero,<br>organiza tu vida.</h1>
-      <p class="lead">Balance reúne en un solo lugar lo que hoy vive repartido entre notas, calendarios y hojas de cálculo: tus tareas pendientes y el control de tus ingresos y gastos.</p>
-      <div class="hero-ctas">
-        <button class="btn-primary" onclick="openApp()">Probar Balance ahora</button>
-        <a href="#vista" class="btn-secondary">Ver cómo funciona</a>
+      <span class="lp-badge"><i></i>Versión beta · tareas, finanzas y calendario</span>
+      <h1>Equilibra tu dinero,<br><span class="lp-hl">organiza tu vida.</span></h1>
+      <p class="lead">Balance reúne en un solo lugar tus tareas, tus ingresos y gastos, tus metas de ahorro y tu calendario de Google, para que el tiempo y el dinero dejen de vivir en herramientas separadas.</p>
+      <div class="lp-cta-row">
+        <button class="lp-btn primary" onclick="openApp()">Probar Balance ahora</button>
+        <a href="#vista" class="lp-btn ghost">Ver cómo funciona</a>
       </div>
+      <ul class="lp-trust">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 18.5a4.5 4.5 0 0 1-.6-8.96A6 6 0 0 1 18 10.5a4 4 0 0 1-.5 8z"/></svg><span>Tus datos en la nube</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span>Google Calendar integrado</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="13" height="10" rx="2"/><path d="M1.5 19h16"/><rect x="18" y="9" width="4.5" height="9" rx="1.2"/></svg><span>Celular y computador</span></li>
+      </ul>
     </div>
-    <div class="scale-card">
+    <div class="scale-card lp-scale">
+      <div class="lp-scale-top"><strong>Pruébalo</strong><span>Mueve el control</span></div>
       <svg id="scaleSvg" viewBox="0 0 320 200" width="100%" xmlns="http://www.w3.org/2000/svg">
         <line x1="160" y1="30" x2="160" y2="150" stroke="#E8873A" stroke-width="4" stroke-linecap="round"/>
         <rect x="146" y="150" width="28" height="20" rx="3" fill="#3A5A7D"/>
@@ -519,137 +882,187 @@
   </div>
 </section>
 
-<section id="vista" style="background:var(--card); border-bottom:1px solid var(--border);">
+<!-- VISTA PREVIA -->
+<section id="vista" class="lp-sec lp-white">
   <div class="wrap">
-    <div class="section-head">
-      <div class="kicker">Cómo funciona</div>
+    <div class="lp-head">
+      <span class="lp-kicker">Cómo se ve</span>
       <h2>Tu panel, de un vistazo</h2>
-      <p>Así se ve Balance apenas entras: finanzas, tareas y metas en el mismo lugar.</p>
+      <p>Finanzas, tareas, metas y calendario en la misma pantalla, en vez de repartidos entre cuatro aplicaciones.</p>
     </div>
-    <div class="summary-row" style="margin-bottom:0;">
-      <div class="sum-card"><div class="label">Balance financiero</div><div class="value positive">$ 420.000</div><div class="sub">$ 1.200.000 ingresos · $ 780.000 gastos</div></div>
-      <div class="sum-card"><div class="label">Tareas pendientes</div><div class="value">4</div><div class="sub">6 completadas de 10</div></div>
-      <div class="sum-card"><div class="label">Metas de ahorro</div><div class="value">65%</div><div class="sub">2 metas activas</div></div>
+    <div class="lp-window" role="img" aria-label="Vista de ejemplo del panel de Balance con resumen, tareas y calendario">
+      <div class="lp-win-bar"><i></i><i></i><i></i><span class="lp-url">balance-nine-olive.vercel.app</span></div>
+      <div class="lp-win-body">
+        <div class="lp-col">
+          <div class="lp-stats">
+            <div class="lp-stat"><small>Balance financiero</small><strong class="pos">$ 420.000</strong><em>$ 1.200.000 ingresos · $ 780.000 gastos</em></div>
+            <div class="lp-stat"><small>Tareas pendientes</small><strong>4</strong><em>6 completadas de 10</em></div>
+            <div class="lp-stat"><small>Metas de ahorro</small><strong>65%</strong><div class="lp-bar"><b style="width:65%"></b></div></div>
+          </div>
+          <div class="lp-card-in">
+            <h4>Tareas</h4>
+            <ul class="lp-tasks">
+              <li><span class="lp-box"></span><span class="t">Entregar taller de bases de datos</span><span class="lp-pill hi">Alta</span></li>
+              <li><span class="lp-box"></span><span class="t">Pagar el arriendo</span><span class="lp-pill md">Media</span></li>
+              <li><span class="lp-box"></span><span class="t">Revisar el presupuesto del mes</span><span class="lp-pill md">Media</span></li>
+              <li class="done"><span class="lp-box on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="t">Llamar al médico</span><span class="lp-pill lo">Baja</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="lp-card-in lp-minical">
+          <div class="lp-mc-head"><h4>Calendario</h4><span class="lp-sync"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.3-4.5L4 8.5"/><path d="M4 4v4.5h4.5"/><path d="M4 13a8 8 0 0 0 14.3 4.5l1.7-2"/><path d="M20 20v-4.5h-4.5"/></svg>Sincronizado con Google</span></div>
+          <div class="lp-mc-month">Noviembre</div>
+          <div class="lp-mc-grid"><div class="lp-dow">L</div><div class="lp-dow">M</div><div class="lp-dow">X</div><div class="lp-dow">J</div><div class="lp-dow">V</div><div class="lp-dow">S</div><div class="lp-dow">D</div><div class="lp-cc out"><span>26</span></div><div class="lp-cc out"><span>27</span></div><div class="lp-cc out"><span>28</span></div><div class="lp-cc out"><span>29</span></div><div class="lp-cc out"><span>30</span></div><div class="lp-cc out"><span>31</span></div><div class="lp-cc"><span>1</span></div><div class="lp-cc"><span>2</span></div><div class="lp-cc"><span>3</span><i class="dots"><b class="g"></b></i></div><div class="lp-cc"><span>4</span></div><div class="lp-cc"><span>5</span><i class="dots"><b class="b"></b></i></div><div class="lp-cc"><span>6</span></div><div class="lp-cc"><span>7</span></div><div class="lp-cc"><span>8</span></div><div class="lp-cc"><span>9</span><i class="dots"><b class="g"></b></i></div><div class="lp-cc"><span>10</span></div><div class="lp-cc"><span>11</span></div><div class="lp-cc sel"><span>12</span><i class="dots"><b class="b"></b><b class="g"></b></i></div><div class="lp-cc"><span>13</span></div><div class="lp-cc"><span>14</span></div><div class="lp-cc"><span>15</span></div><div class="lp-cc"><span>16</span></div><div class="lp-cc"><span>17</span><i class="dots"><b class="g"></b></i></div><div class="lp-cc"><span>18</span></div><div class="lp-cc"><span>19</span></div><div class="lp-cc"><span>20</span><i class="dots"><b class="b"></b></i></div><div class="lp-cc"><span>21</span></div><div class="lp-cc"><span>22</span></div><div class="lp-cc"><span>23</span></div><div class="lp-cc"><span>24</span><i class="dots"><b class="g"></b></i></div><div class="lp-cc"><span>25</span></div><div class="lp-cc"><span>26</span></div><div class="lp-cc"><span>27</span><i class="dots"><b class="b"></b></i></div><div class="lp-cc"><span>28</span></div><div class="lp-cc"><span>29</span></div><div class="lp-cc"><span>30</span></div><div class="lp-cc out"><span>1</span></div><div class="lp-cc out"><span>2</span></div><div class="lp-cc out"><span>3</span></div><div class="lp-cc out"><span>4</span></div><div class="lp-cc out"><span>5</span></div><div class="lp-cc out"><span>6</span></div></div>
+          <ul class="lp-mc-list">
+            <li><i class="g"></i><span>10:00 · Reunión de proyecto</span><em>Google</em></li>
+            <li><i class="b"></i><span>15:30 · Cita médica</span><em>Balance</em></li>
+            <li><i class="g"></i><span>Todo el día · Viaje</span><em>Google</em></li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <p style="margin-top:16px; color:var(--gray); font-size:.85rem;">Datos de ejemplo. <a href="#app" onclick="openApp();return false;" style="color:var(--orange-dark); font-weight:600;">Prueba con los tuyos</a></p>
+    <p class="lp-note">Datos de ejemplo. <a href="#app" onclick="openApp();return false;">Prueba con los tuyos</a></p>
   </div>
 </section>
 
-<section id="problema">
-  <div class="wrap problem-grid">
-    <div class="section-head" style="margin-bottom:0;">
-      <div class="kicker">El problema</div>
-      <h2>La organización vive repartida en demasiados lugares</h2>
-      <p>Muchas personas usan notas, calendarios, hojas de cálculo o apuntes en papel para controlar por separado sus gastos, ingresos y pendientes. El resultado: olvidos, gastos innecesarios y ninguna vista clara de cómo van realmente el tiempo y el dinero.</p>
-    </div>
+<!-- PROBLEMA -->
+<section id="problema" class="lp-sec">
+  <div class="wrap lp-split">
     <div>
-      <ul class="tool-list">
-        <li><span class="dot"></span>Notas del celular para apuntar tareas sueltas, sin prioridades ni fechas claras.</li>
-        <li><span class="dot"></span>Calendarios y agendas separados del control de gastos.</li>
-        <li><span class="dot"></span>Hojas de cálculo o cuadernos para llevar ingresos y gastos manualmente.</li>
-        <li><span class="dot"></span>Ninguna vista conjunta de cómo van el tiempo y el dinero a la vez.</li>
-      </ul>
+      <span class="lp-kicker">El problema</span>
+      <h2 class="lp-h2">La organización vive repartida en demasiados lugares</h2>
+      <p class="lp-p">Muchas personas usan notas, calendarios, hojas de cálculo o apuntes en papel para controlar por separado sus gastos, ingresos y pendientes. El resultado: olvidos, gastos innecesarios y ninguna vista clara de cómo van realmente el tiempo y el dinero.</p>
+    </div>
+    <ul class="lp-pains">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4" width="17" height="16" rx="3"/><path d="M8 11.5l2.4 2.4L16 8.5"/></svg><span>Notas del celular para apuntar tareas sueltas, sin prioridades ni fechas claras.</span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span>Calendarios y agendas separados del control de gastos.</span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l5.5-5.5 4 4L21 7"/><path d="M15 7h6v6"/></svg><span>Hojas de cálculo o cuadernos para llevar ingresos y gastos a mano.</span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 17a8 8 0 1 1 16 0"/><path d="M12 17l4-5"/><circle cx="12" cy="17" r="1.2" fill="currentColor"/></svg><span>Ninguna vista conjunta de cómo van el tiempo y el dinero a la vez.</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- FUNCIONES -->
+<section id="funciones" class="lp-sec lp-white">
+  <div class="wrap">
+    <div class="lp-head">
+      <span class="lp-kicker">Qué incluye</span>
+      <h2>Todo lo necesario para tomar el control, sin complicarlo</h2>
+      <p>Tareas, finanzas y calendario en un mismo panel, con las herramientas justas para el día a día.</p>
+    </div>
+    <div class="lp-feats">
+      <article class="lp-feat"><div class="lp-ico o"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4" width="17" height="16" rx="3"/><path d="M8 11.5l2.4 2.4L16 8.5"/></svg></div><h3>Tareas con prioridad</h3><p>Crea, edita, completa y elimina tareas con fecha y prioridad alta, media o baja. Filtra y ordena para ver primero lo importante.</p></article>
+      <article class="lp-feat"><div class="lp-ico g"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l5.5-5.5 4 4L21 7"/><path d="M15 7h6v6"/></svg></div><h3>Ingresos y gastos</h3><p>Registra movimientos por categoría, busca y filtra por tipo, categoría o mes, y consulta tu balance al instante.</p></article>
+      <article class="lp-feat"><div class="lp-ico b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5V12l6 4.2"/></svg></div><h3>Presupuesto mensual</h3><p>Define un límite por mes, recibe alertas y mira en qué categorías se va tu dinero con un gráfico claro.</p></article>
+      <article class="lp-feat"><div class="lp-ico g"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg></div><h3>Metas de ahorro</h3><p>Fija un objetivo, abona cuando quieras y sigue tu avance con una barra de progreso.</p></article>
+      <article class="lp-feat"><div class="lp-ico o"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 17a8 8 0 1 1 16 0"/><path d="M12 17l4-5"/><circle cx="12" cy="17" r="1.2" fill="currentColor"/></svg></div><h3>Resumen y equilibrio</h3><p>Resumen por mes, comparativo de 6 meses y un medidor que muestra si tu dinero y tus tareas están en equilibrio.</p></article>
+      <article class="lp-feat"><div class="lp-ico b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="M7.5 10.5L12 15l4.5-4.5"/><path d="M5 19.5h14"/></svg></div><h3>Tus datos, a tu alcance</h3><p>Exporta a CSV, descarga una copia de seguridad en JSON e impórtala cuando la necesites. Al borrar, puedes deshacer.</p></article>
     </div>
   </div>
 </section>
 
-<section id="usuarios" style="background:var(--card); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+<!-- CALENDARIO -->
+<section id="calendario" class="lp-sec lp-dark">
+  <div class="wrap lp-split lp-cal-split">
+    <div>
+      <span class="lp-kicker light">Calendario integrado</span>
+      <h2 class="lp-h2 light">Tu calendario de Google, dentro de Balance</h2>
+      <p class="lp-p light">Conecta tu cuenta de Google y gestiona tus eventos junto a tus tareas y finanzas. Lo que cambias en un lado se refleja en el otro.</p>
+      <ul class="lp-checks">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg><span><strong>Sincronización en ambos sentidos:</strong> crea, edita o elimina eventos desde Balance o desde Google Calendar.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg><span><strong>Vista mensual y lista</strong> de eventos próximos, con eventos de todo el día y cada ocurrencia de los eventos recurrentes.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg><span><strong>Siempre al día:</strong> se sincroniza al abrir la app, cada pocos minutos o cuando pulsas «Sincronizar».</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg><span><strong>Tú decides:</strong> conectas con tu autorización de Google y puedes desconectar cuando quieras.</span></li>
+      </ul>
+      <p class="lp-fine">Integración en fase beta.</p>
+    </div>
+    <div class="lp-sync-card" role="img" aria-label="Ilustración de la sincronización entre Balance y Google Calendar">
+      <div class="lp-sync-row">
+        <div class="lp-node"><div class="lp-ico o"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.8"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.8"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.8"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.8"/></svg></div><strong>Balance</strong><small>Crea y edita citas</small></div>
+        <div class="lp-arrows"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.3-4.5L4 8.5"/><path d="M4 4v4.5h4.5"/><path d="M4 13a8 8 0 0 0 14.3 4.5l1.7-2"/><path d="M20 20v-4.5h-4.5"/></svg></div>
+        <div class="lp-node"><div class="lp-ico b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></div><strong>Google Calendar</strong><small>Tus eventos de siempre</small></div>
+      </div>
+      <ul class="lp-sync-list">
+        <li><i class="b"></i><span>Cita médica</span><em>Creada en Balance</em><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></b></li>
+        <li><i class="g"></i><span>Reunión de proyecto</span><em>Importada de Google</em><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></b></li>
+        <li><i class="g"></i><span>Viaje · todo el día</span><em>Editada en Google</em><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></b></li>
+      </ul>
+      <div class="lp-sync-foot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.3-4.5L4 8.5"/><path d="M4 4v4.5h4.5"/><path d="M4 13a8 8 0 0 0 14.3 4.5l1.7-2"/><path d="M20 20v-4.5h-4.5"/></svg><span>Última sincronización: hace un momento</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ACCESO Y CUENTA -->
+<section id="acceso" class="lp-sec">
   <div class="wrap">
-    <div class="section-head">
-      <div class="kicker">Para quién es</div>
+    <div class="lp-head">
+      <span class="lp-kicker">Acceso y cuenta</span>
+      <h2>Entra desde el enlace web, sin instalar nada</h2>
+      <p>Balance funciona en el navegador: abre el enlace, inicia sesión y continúa donde lo dejaste.</p>
+    </div>
+    <div class="lp-access">
+      <ol class="lp-steps">
+        <li><span class="n">1</span><div><h3>Abre el enlace</h3><p>Entra desde el computador o el celular con el enlace web de Balance.</p><a class="lp-link-chip" href="https://balance-nine-olive.vercel.app"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1 1"/><path d="M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1-1"/></svg>balance-nine-olive.vercel.app</a></div></li>
+        <li><span class="n">2</span><div><h3>Crea tu cuenta</h3><p>Regístrate con correo y contraseña, o inicia sesión si ya tienes una.</p></div></li>
+        <li><span class="n">3</span><div><h3>Organiza y conecta</h3><p>Empieza con tus tareas y finanzas, y conecta Google Calendar cuando quieras.</p></div></li>
+      </ol>
+      <div class="lp-acc-cards">
+        <div class="lp-mini"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20c.9-3.6 3.8-5.5 7.5-5.5s6.6 1.9 7.5 5.5"/></svg><div><h3>Cuenta personal</h3><p>Tu información es tuya: cada cuenta ve solo sus propios datos.</p></div></div>
+        <div class="lp-mini"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 18.5a4.5 4.5 0 0 1-.6-8.96A6 6 0 0 1 18 10.5a4 4 0 0 1-.5 8z"/></svg><div><h3>Datos en la nube</h3><p>Lo que registras se guarda en tu cuenta y lo ves desde cualquier dispositivo, con una copia local de respaldo.</p></div></div>
+        <div class="lp-mini"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></svg><div><h3>Acceso protegido</h3><p>Inicio de sesión seguro y conexión con Google mediante la autorización oficial de Google.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARA QUIEN -->
+<section id="usuarios" class="lp-sec lp-white">
+  <div class="wrap">
+    <div class="lp-head">
+      <span class="lp-kicker">Para quién es</span>
       <h2>Pensado para quien equilibra varias responsabilidades a la vez</h2>
       <p>Estudiantes como usuario principal, y trabajadores y jóvenes adultos como públicos secundarios que buscan mejorar su planificación personal y financiera.</p>
     </div>
-    <table class="users-table">
-      <thead>
-        <tr><th>Usuario</th><th>Necesidad</th><th>Beneficio esperado</th></tr>
-      </thead>
-      <tbody>
-        <tr><td class="who">Estudiante</td><td>Organizar gastos y tareas académicas</td><td>Mejor control de su dinero y cumplimiento de actividades</td></tr>
-        <tr><td class="who">Joven adulto</td><td>Controlar sus finanzas y responsabilidades</td><td>Mejorar su organización y hábitos de ahorro</td></tr>
-        <tr><td class="who">Trabajador</td><td>Administrar gastos y tareas diarias</td><td>Aprovechar mejor su tiempo y controlar sus gastos</td></tr>
-        <tr><td class="who">Usuario general</td><td>Tener dinero y tareas organizados en un solo lugar</td><td>Mayor comodidad, control y organización</td></tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<section id="funciones" class="feat-band">
-  <div class="wrap">
-    <div class="section-head">
-      <div class="kicker">Qué incluye la versión beta</div>
-      <h2>Todo lo necesario para tomar el control, sin complicarlo</h2>
-      <p>La primera versión de Balance se concentra en lo esencial: tareas y finanzas, en un mismo panel.</p>
-    </div>
-    <div class="feat-grid">
-      <div class="feat-item">
-        <svg class="icon" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="17" rx="2.5" stroke="#E8873A" stroke-width="1.8"/><path d="M8 9l2.2 2.2L14 7.5" stroke="#E8873A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><line x1="7" y1="15" x2="17" y2="15" stroke="#3A5A7D" stroke-width="1.6" stroke-linecap="round"/></svg>
-        <h4>Tareas con prioridad</h4>
-        <p>Crea, edita, completa y elimina tareas con fecha y nivel de prioridad.</p>
-      </div>
-      <div class="feat-item">
-        <svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M3 17l5-5 4 4 9-9" stroke="#E8873A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 7h6v6" stroke="#E8873A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <h4>Ingresos y gastos</h4>
-        <p>Registra movimientos por categoría y consulta tu balance financiero al instante.</p>
-      </div>
-      <div class="feat-item">
-        <svg class="icon" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#E8873A" stroke-width="1.8"/><path d="M12 7v5l3.5 2" stroke="#E8873A" stroke-width="1.8" stroke-linecap="round"/></svg>
-        <h4>Metas de ahorro</h4>
-        <p>Define un objetivo y sigue tu progreso con una barra clara de avance.</p>
-      </div>
-      <div class="feat-item">
-        <svg class="icon" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="8" height="8" rx="1.6" stroke="#E8873A" stroke-width="1.8"/><rect x="13" y="3" width="8" height="8" rx="1.6" stroke="#E8873A" stroke-width="1.8"/><rect x="3" y="13" width="8" height="8" rx="1.6" stroke="#E8873A" stroke-width="1.8"/><rect x="13" y="13" width="8" height="8" rx="1.6" stroke="#E8873A" stroke-width="1.8"/></svg>
-        <h4>Panel principal</h4>
-        <p>Un resumen único de tus tareas y tus finanzas apenas entras.</p>
-      </div>
+    <div class="lp-users">
+      <article class="lp-user"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 9L12 4.5 21.5 9 12 13.5z"/><path d="M6.5 11.5V16c0 1.4 2.5 2.7 5.5 2.7s5.5-1.3 5.5-2.7v-4.5"/></svg><h3>Estudiante</h3><p class="need">Organizar gastos y tareas académicas.</p><p class="ben">Mejor control de su dinero y cumplimiento de actividades.</p></article>
+      <article class="lp-user"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l1.9 5.2 5.1 1.9-5.1 1.9L12 17.7l-1.9-5.2L5 10.6l5.1-1.9z"/></svg><h3>Joven adulto</h3><p class="need">Controlar sus finanzas y responsabilidades.</p><p class="ben">Mejorar su organización y hábitos de ahorro.</p></article>
+      <article class="lp-user"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="7.5" width="17" height="12" rx="2.5"/><path d="M9 7.5V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1.5M3.5 13h17"/></svg><h3>Trabajador</h3><p class="need">Administrar gastos y tareas diarias.</p><p class="ben">Aprovechar mejor su tiempo y controlar sus gastos.</p></article>
+      <article class="lp-user"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.8"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.8"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.8"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.8"/></svg><h3>Usuario general</h3><p class="need">Tener dinero y tareas organizados en un solo lugar.</p><p class="ben">Mayor comodidad, control y organización.</p></article>
     </div>
   </div>
 </section>
 
-<section id="alcance">
+<!-- ALCANCE BETA -->
+<section id="alcance" class="lp-sec">
   <div class="wrap">
-    <div class="section-head">
-      <div class="kicker">Versión beta</div>
-      <h2>Qué incluye esta primera versión y qué queda para más adelante</h2>
-      <p>Balance nace enfocado en organización personal, no en operar dinero real todavía.</p>
+    <div class="lp-head">
+      <span class="lp-kicker">Versión beta</span>
+      <h2>Qué incluye hoy y qué queda para más adelante</h2>
+      <p>Balance está enfocado en organización personal, no en operar dinero real todavía.</p>
     </div>
-    <div class="scope-grid">
-      <div class="scope-card yes">
-        <h3>Incluido en esta versión</h3>
-        <ul>
-          <li>Cuenta con correo y contraseña; tus datos se guardan en la nube</li>
-          <li>Crear, editar, completar y eliminar tareas</li>
-          <li>Fechas y prioridades para las tareas</li>
-          <li>Registro de ingresos y gastos por categoría</li>
-          <li>Consulta del balance financiero</li>
-          <li>Metas de ahorro con seguimiento de progreso</li>
-          <li>Filtros, búsqueda y orden en tareas y movimientos</li>
-          <li>Presupuesto mensual con alertas y gráfico de gastos por categoría</li>
-          <li>Exportar a CSV y copia de seguridad (JSON)</li>
-          <li>Resumen por mes, comparativo de 6 meses y medidor de equilibrio</li>
-          <li>Edición en ventana y botón «Deshacer» al borrar</li>
+    <div class="lp-scope">
+      <div class="lp-scope-card yes">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>Incluido en esta versión</h3>
+        <ul class="lp-tags">
+          <li>Cuenta con correo y contraseña</li><li>Datos en la nube</li><li>Tareas con fecha y prioridad</li><li>Ingresos y gastos por categoría</li><li>Metas de ahorro</li><li>Presupuesto mensual con alertas</li><li>Gráfico de gastos por categoría</li><li>Filtros, búsqueda y orden</li><li>Resumen mensual y comparativo de 6 meses</li><li>Medidor de equilibrio</li><li>Google Calendar con sincronización bidireccional</li><li>Calendario mensual y en lista</li><li>Exportar CSV y copia de seguridad JSON</li><li>Edición en ventana y «Deshacer» al borrar</li>
         </ul>
       </div>
-      <div class="scope-card no">
-        <h3>Fuera de esta versión</h3>
-        <ul>
-          <li>Conexión con cuentas bancarias</li>
-          <li>Transferencias bancarias</li>
-          <li>Pagos desde la plataforma</li>
-          <li>Conexión con tarjetas de crédito o débito</li>
-          <li>Inteligencia artificial para administrar finanzas</li>
+      <div class="lp-scope-card no">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>Fuera de esta versión</h3>
+        <ul class="lp-nolist">
+          <li>Conexión con cuentas bancarias</li><li>Transferencias bancarias</li><li>Pagos desde la plataforma</li><li>Conexión con tarjetas de crédito o débito</li><li>Inteligencia artificial para administrar finanzas</li>
         </ul>
       </div>
     </div>
-
   </div>
 </section>
 
-<section class="cta-band">
+<!-- CTA -->
+<section class="lp-cta">
   <div class="wrap">
     <h2>Todo en equilibrio, todo bajo control.</h2>
-    <p>Empieza a organizar tus tareas y tus finanzas desde un mismo lugar.</p>
-    <button class="btn-primary" onclick="openApp()">Probar Balance ahora</button>
+    <p>Empieza a organizar tus tareas, tus finanzas y tu calendario desde un mismo lugar.</p>
+    <button class="lp-btn primary" onclick="openApp()">Probar Balance ahora</button>
   </div>
 </section>
 
@@ -712,6 +1125,35 @@
         <button class="reset soft" onclick="document.getElementById('importFile').click()">Importar</button>
         <button class="reset" onclick="resetAll()">Borrar mis datos</button>
         <input type="file" id="importFile" accept="application/json,.json" style="display:none" onchange="importJSON(event)">
+      </div>
+    </div>
+
+    <!-- Bienvenida (solo se muestra mientras el panel está vacío y no se ha cerrado) -->
+    <div id="welcomeCard" class="wc" role="region" aria-labelledby="wcTitle" hidden>
+      <button type="button" class="wc-close" data-wc="dismiss" aria-label="Cerrar la guía de bienvenida">×</button>
+      <span class="wc-kicker"><i></i>Primeros pasos</span>
+      <h2 id="wcTitle">Bienvenido a Balance. <em>Empieza en tres pasos.</em></h2>
+      <p class="wc-lead">Tu panel está vacío y listo. Añade un primer dato en cada área y verás cómo el resumen, el equilibrio y las gráficas cobran vida.</p>
+      <ol class="wc-steps">
+        <li class="wc-step">
+          <div class="wc-top"><span class="wc-n">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M9 12l2.3 2.3L15.5 10"/></svg></div>
+          <div><strong>Anota una tarea</strong><span class="d">Escribe algo pendiente y elige su prioridad. Verás cuántas te quedan en tu resumen.</span></div>
+          <button type="button" class="wc-go" data-wc-go="taskInput">Ir a tareas</button>
+        </li>
+        <li class="wc-step">
+          <div class="wc-top"><span class="wc-n">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10.5h18M16 15h2"/></svg></div>
+          <div><strong>Registra un ingreso o gasto</strong><span class="d">Añade un movimiento y tu balance financiero se calcula solo.</span></div>
+          <button type="button" class="wc-go" data-wc-go="txnDesc">Ir a movimientos</button>
+        </li>
+        <li class="wc-step">
+          <div class="wc-top"><span class="wc-n">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.5"/></svg></div>
+          <div><strong>Crea una meta de ahorro</strong><span class="d">Ponle nombre y objetivo, y sigue tu progreso a medida que ahorras.</span></div>
+          <button type="button" class="wc-go" data-wc-go="goalName">Ir a metas</button>
+        </li>
+      </ol>
+      <div class="wc-foot">
+        <small>Esta guía desaparece sola cuando añadas tu primer dato.</small>
+        <button type="button" class="wc-skip" data-wc="dismiss">Ocultar esta guía</button>
       </div>
     </div>
 
@@ -1754,6 +2196,54 @@ document.addEventListener('visibilitychange', () => { if(!document.hidden && cur
 })();
 document.getElementById('balanceSlider').addEventListener('input', e => updateScale(e.target.value));
 if(location.hash === '#app') showApp();
+</script>
+<script id="v7-welcome">
+/* v7 — Bienvenida visual. Solo LEE el estado existente (state, appts, currentUserId)
+   y muestra/oculta #welcomeCard. No llama a la API, no escribe datos de la app ni toca funciones existentes.
+   Único almacenamiento propio: marca 'balance:welcome:<usuario>' = '1' para no repetir la guía. */
+(function(){
+  var card = document.getElementById('welcomeCard');
+  var dash = document.getElementById('dash-view');
+  if(!card || !dash) return;
+
+  function uidNow(){ try{ return (typeof currentUserId !== 'undefined' && currentUserId) ? String(currentUserId) : null; }catch(e){ return null; } }
+  function flag(){ var u = uidNow(); return u ? 'balance:welcome:' + u : null; }
+  function hasData(){
+    try{
+      var st = (typeof state !== 'undefined') ? state : null;
+      if(st && ((st.tasks && st.tasks.length) || (st.txns && st.txns.length) || (st.goals && st.goals.length) || st.budget)) return true;
+      if(typeof appts !== 'undefined' && appts && appts.length) return true;
+    }catch(e){}
+    return false;
+  }
+  function seen(){ var k = flag(); if(!k) return false; try{ return localStorage.getItem(k) === '1'; }catch(e){ return false; } }
+  function mark(){ var k = flag(); if(!k) return; try{ localStorage.setItem(k, '1'); }catch(e){} }
+
+  function refresh(){
+    var visible = dash.style.display === 'block';
+    if(!visible || !uidNow()){ card.hidden = true; return; }
+    if(hasData()){ mark(); card.hidden = true; return; }   // ya empezó: no mostrar nunca más
+    card.hidden = seen();
+  }
+
+  card.addEventListener('click', function(ev){
+    var t = ev.target.closest ? ev.target.closest('[data-wc],[data-wc-go]') : null;
+    if(!t) return;
+    if(t.getAttribute('data-wc') === 'dismiss'){ mark(); card.hidden = true; return; }
+    var el = document.getElementById(t.getAttribute('data-wc-go'));
+    if(el){ el.scrollIntoView({ behavior:'smooth', block:'center' }); try{ el.focus({ preventScroll:true }); }catch(e){ el.focus(); } }
+  });
+
+  if(typeof MutationObserver === 'function'){
+    var mo = new MutationObserver(refresh);
+    mo.observe(dash, { attributes:true, attributeFilter:['style'] });
+    ['greeting','taskCount','txnCount','goalCount','apptCount'].forEach(function(id){
+      var n = document.getElementById(id);
+      if(n) mo.observe(n, { childList:true, characterData:true, subtree:true });
+    });
+  }
+  refresh();
+})();
 </script>
 </body>
 </html>

@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#16324F">
+<meta name="description" content="Balance: organiza tus tareas, ingresos, gastos y metas de ahorro en un solo panel.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 40 40%27%3E%3Crect width=%2740%27 height=%2740%27 rx=%278%27 fill=%27%2316324F%27/%3E%3Ccircle cx=%2720%27 cy=%2720%27 r=%278%27 fill=%27%23E8873A%27/%3E%3C/svg%3E">
+<title>Balance — Equilibra tu dinero, organiza tu vida</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#16324F;
+    --navy-2:#1F4568;
+    --navy-3:#0F2439;
+    --orange:#E8873A;
+    --orange-dark:#C96A21;
+    --green:#2E9B6F;
+    --green-light:#E1F1E8;
+    --cream:#FAF7F1;
+    --ink:#16324F;
+    --gray:#69758A;
+    --gray-light:#6B7689;
+    --border:#E3E1D8;
+    --card:#FFFFFF;
+    --red:#C25450;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter', sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{font-family:'Space Grotesk', sans-serif; color:var(--navy); font-weight:600;}
+  a{color:inherit;}
+  button{font-family:'Inter', sans-serif; cursor:pointer; border:none;}
+  img,svg{display:block; max-width:100%;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 32px;}
+  @media (max-width:640px){ .wrap{padding:0 20px;} }
+
+  /* ---------- NAV ---------- */
+  header.site{
+    position:sticky; top:0; z-index:50;
+    background:rgba(250,247,241,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav{display:flex; align-items:center; justify-content:space-between; padding:16px 32px; max-width:1120px; margin:0 auto;}
+  .brand{display:flex; align-items:center; gap:10px; font-family:'Space Grotesk'; font-weight:700; font-size:1.15rem; color:var(--navy);}
+  .brand .mark{width:30px; height:30px;}
+  .navlinks{display:flex; gap:28px; font-size:0.92rem; font-weight:500; color:var(--navy-2);}
+  .navlinks a{text-decoration:none; opacity:0.8; transition:opacity .15s;}
+  .navlinks a:hover{opacity:1;}
+  .nav-cta{
+    background:var(--navy); color:#fff; padding:10px 20px; border-radius:8px;
+    font-size:0.9rem; font-weight:600; transition:background .15s;
+  }
+  .nav-cta:hover{background:var(--navy-2);}
+  @media (max-width:760px){ .navlinks{display:none;} }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:var(--navy);
+    color:#fff;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute; left:0; top:0; bottom:0; width:6px;
+    background:var(--orange);
+  }
+  .hero-inner{
+    max-width:1120px; margin:0 auto; padding:80px 32px 72px;
+    display:grid; grid-template-columns:1.05fr 0.95fr; gap:56px; align-items:center;
+  }
+  @media (max-width:900px){ .hero-inner{grid-template-columns:1fr; padding:56px 24px;} }
+  .eyebrow{color:var(--orange); font-weight:600; font-size:0.85rem; letter-spacing:0.02em; margin-bottom:16px;}
+  .hero h1{font-size:clamp(2.2rem, 4.4vw, 3.4rem); color:#fff; line-height:1.08; letter-spacing:-0.01em;}
+  .hero p.lead{color:#C8D3E0; font-size:1.1rem; margin-top:18px; max-width:44ch;}
+  .hero-ctas{display:flex; gap:14px; margin-top:32px; flex-wrap:wrap;}
+  .btn-primary{
+    background:var(--orange); color:#1a1408; padding:14px 26px; border-radius:9px;
+    font-weight:600; font-size:0.98rem; transition:transform .15s, background .15s;
+  }
+  .btn-primary:hover{background:#f19a4f; transform:translateY(-1px);}
+  .btn-secondary{
+    background:transparent; color:#fff; padding:14px 24px; border-radius:9px;
+    font-weight:600; font-size:0.98rem; border:1px solid rgba(255,255,255,0.28);
+    transition:border-color .15s;
+  }
+  .btn-secondary:hover{border-color:rgba(255,255,255,0.6);}
+
+  /* scale widget */
+  .scale-card{
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.12);
+    border-radius:16px;
+    padding:28px 24px 22px;
+  }
+  .scale-card p.hint{color:#A9B7C8; font-size:0.85rem; margin-top:14px; text-align:center;}
+  .slider-row{display:flex; align-items:center; gap:12px; margin-top:6px;}
+  .slider-row span{font-size:0.78rem; color:#C8D3E0; font-weight:600; white-space:nowrap; width:64px;}
+  .slider-row span.right{text-align:right;}
+  input[type=range]{
+    -webkit-appearance:none; width:100%; height:4px; border-radius:2px;
+    background:linear-gradient(90deg, var(--green) 0%, var(--orange) 100%);
+    outline:none;
+  }
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none; width:18px; height:18px; border-radius:50%;
+    background:#fff; border:3px solid var(--navy); cursor:grab;
+  }
+  input[type=range]::-moz-range-thumb{
+    width:18px; height:18px; border-radius:50%; background:#fff; border:3px solid var(--navy); cursor:grab;
+  }
+  .balance-status{
+    text-align:center; margin-top:16px; font-family:'Space Grotesk'; font-weight:600; font-size:0.95rem; color:var(--orange);
+    transition:color .2s;
+  }
+  .balance-status.is-balanced{color:var(--green);}
+
+  /* ---------- SECTIONS SHARED ---------- */
+  section{padding:76px 0;}
+  .section-head{max-width:640px; margin-bottom:44px;}
+  .section-head .kicker{color:var(--orange-dark); font-weight:600; font-size:0.85rem; margin-bottom:10px;}
+  .section-head h2{font-size:clamp(1.6rem,3vw,2.1rem); letter-spacing:-0.01em;}
+  .section-head p{color:var(--gray); margin-top:14px; font-size:1.02rem; max-width:56ch;}
+
+  /* problema */
+  .problem-grid{display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:start;}
+  @media (max-width:800px){ .problem-grid{grid-template-columns:1fr;} }
+  .tool-list{list-style:none;}
+  .tool-list li{
+    display:flex; gap:12px; padding:14px 0; border-bottom:1px solid var(--border); font-size:0.98rem; color:var(--navy-2);
+  }
+  .tool-list li:last-child{border-bottom:none;}
+  .tool-list li .dot{width:6px; height:6px; border-radius:50%; background:var(--orange); margin-top:8px; flex-shrink:0;}
+
+  /* usuarios table */
+  .users-table{width:100%; border-collapse:collapse; margin-top:8px;}
+  .users-table th{
+    text-align:left; font-size:0.78rem; text-transform:none; color:var(--gray); font-weight:600;
+    padding:0 16px 12px 0; border-bottom:1px solid var(--border);
+  }
+  .users-table td{padding:16px 16px 16px 0; border-bottom:1px solid var(--border); font-size:0.92rem; vertical-align:top;}
+  .users-table td.who{font-weight:600; color:var(--navy); font-family:'Space Grotesk';}
+  .users-table tr:last-child td{border-bottom:none;}
+  @media (max-width:700px){
+    .users-table thead{display:none;}
+    .users-table, .users-table tbody, .users-table tr, .users-table td{display:block; width:100%;}
+    .users-table tr{padding:16px 0; border-bottom:1px solid var(--border);}
+    .users-table td{border-bottom:none; padding:4px 0;}
+    .users-table td.who{margin-bottom:6px;}
+  }
+
+  /* features */
+  .feat-band{background:var(--navy-3); color:#fff;}
+  .feat-band .section-head p{color:#A9B7C8;}
+  .feat-band .section-head .kicker{color:var(--orange);}
+  .feat-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.1); border-radius:14px; overflow:hidden;}
+  @media (max-width:900px){ .feat-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:560px){ .feat-grid{grid-template-columns:1fr;} }
+  .feat-item{background:var(--navy-3); padding:26px 22px; min-height:150px;}
+  .feat-item .icon{width:30px; height:30px; margin-bottom:16px;}
+  .feat-item h4{color:#fff; font-size:1rem; margin-bottom:8px;}
+  .feat-item p{color:#9FADC0; font-size:0.87rem;}
+
+  /* beta scope */
+  .scope-grid{display:grid; grid-template-columns:1fr 1fr; gap:24px;}
+  @media (max-width:760px){ .scope-grid{grid-template-columns:1fr;} }
+  .scope-card{background:var(--card); border:1px solid var(--border); border-radius:14px; padding:28px;}
+  .scope-card h3{font-size:1.05rem; display:flex; align-items:center; gap:10px; margin-bottom:16px;}
+  .scope-card.yes h3{color:var(--green);}
+  .scope-card.no h3{color:var(--gray);}
+  .scope-card ul{list-style:none;}
+  .scope-card li{font-size:0.93rem; color:var(--navy-2); padding:9px 0 9px 22px; position:relative; border-bottom:1px solid var(--border);}
+  .scope-card li:last-child{border-bottom:none;}
+  .scope-card.yes li::before{content:"✓"; position:absolute; left:0; color:var(--green); font-weight:700;}
+  .scope-card.no li{color:var(--gray-light);}
+  .scope-card.no li::before{content:"–"; position:absolute; left:0; color:var(--gray-light); font-weight:700;}
+
+  /* palette strip */
+  .palette-strip{display:flex; gap:0; border-radius:14px; overflow:hidden; margin-top:16px; border:1px solid var(--border);}
+  .swatch{flex:1; padding:20px 18px; color:#fff;}
+  .swatch h5{font-family:'Space Grotesk'; font-size:0.92rem; margin-bottom:4px;}
+  .swatch p{font-size:0.78rem; opacity:0.9;}
+  .swatch.navy{background:var(--navy);}
+  .swatch.green{background:var(--green);}
+  .swatch.white{background:var(--cream); color:var(--navy);}
+  .swatch.white p{opacity:0.65;}
+
+  /* CTA band */
+  .cta-band{background:linear-gradient(120deg, var(--navy) 0%, var(--navy-2) 100%); color:#fff; text-align:center;}
+  .cta-band h2{color:#fff; font-size:clamp(1.5rem,3vw,2rem);}
+  .cta-band p{color:#C8D3E0; margin-top:12px; font-size:1rem;}
+  .cta-band .btn-primary{margin-top:26px;}
+
+  footer{padding:36px 0; text-align:center; color:var(--gray-light); font-size:0.85rem;}
+
+  /* ---------- APP VIEW ---------- */
+  #app-view{display:none; background:var(--cream); min-height:100vh;}
+  .app-topbar{
+    background:var(--navy); color:#fff; padding:16px 32px; display:flex; align-items:center; justify-content:space-between;
+    position:sticky; top:0; z-index:40;
+  }
+  .app-topbar .brand{color:#fff;}
+  .app-topbar .back{font-size:0.85rem; color:#C8D3E0; font-weight:500;}
+  .app-topbar .back:hover{color:#fff;}
+
+  .gate{max-width:420px; margin:80px auto; background:var(--card); border:1px solid var(--border); border-radius:16px; padding:40px 32px; text-align:center;}
+  .gate .mark{width:44px; height:44px; margin:0 auto 18px;}
+  .gate h2{font-size:1.3rem;}
+  .gate p{color:var(--gray); margin-top:8px; font-size:0.92rem;}
+  .gate input{
+    width:100%; margin-top:22px; padding:13px 14px; border-radius:9px; border:1px solid var(--border);
+    font-size:0.95rem; font-family:'Inter'; background:var(--cream);
+  }
+  .gate input:focus{outline:2px solid var(--navy); outline-offset:1px;}
+  .gate button{width:100%; margin-top:14px; background:var(--navy); color:#fff; padding:13px; border-radius:9px; font-weight:600; font-size:0.95rem;}
+  .gate button:hover{background:var(--navy-2);}
+  .gate .note{margin-top:16px; font-size:0.76rem; color:var(--gray-light);}
+
+  .dash{max-width:1120px; margin:0 auto; padding:36px 32px 80px;}
+  .dash-head{display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:28px; flex-wrap:wrap; gap:12px;}
+  .dash-head h1{font-size:1.6rem;}
+  .dash-head p{color:var(--gray); font-size:0.92rem; margin-top:4px;}
+  .dash-head .reset{font-size:0.8rem; color:var(--gray-light); border:1px solid var(--border); padding:8px 14px; border-radius:8px; background:#fff;}
+  .dash-head .reset:hover{color:var(--red); border-color:var(--red);}
+
+  .summary-row{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:36px;}
+  @media (max-width:800px){ .summary-row{grid-template-columns:1fr;} }
+  .sum-card{background:var(--card); border:1px solid var(--border); border-radius:14px; padding:22px 22px;}
+  .sum-card .label{font-size:0.8rem; color:var(--gray); font-weight:600;}
+  .sum-card .value{font-family:'Space Grotesk'; font-size:1.7rem; font-weight:700; margin-top:6px; color:var(--navy);}
+  .sum-card .value.negative{color:var(--red);}
+  .sum-card .value.positive{color:var(--green);}
+  .sum-card .sub{font-size:0.78rem; color:var(--gray-light); margin-top:4px;}
+
+  .panel-grid{display:grid; grid-template-columns:1.2fr 1fr; gap:24px; align-items:start;}
+  @media (max-width:900px){ .panel-grid{grid-template-columns:1fr;} }
+  .panel{background:var(--card); border:1px solid var(--border); border-radius:14px; padding:26px; margin-bottom:24px;}
+  .panel h3{font-size:1.05rem; display:flex; justify-content:space-between; align-items:center;}
+  .panel h3 .count{font-size:0.75rem; color:var(--gray-light); font-weight:500; font-family:'Inter';}
+
+  .add-row{display:flex; gap:8px; margin-top:16px; flex-wrap:wrap;}
+  .add-row input, .add-row select{
+    padding:10px 12px; border-radius:8px; border:1px solid var(--border); font-size:0.87rem; font-family:'Inter'; background:var(--cream);
+  }
+  .add-row input[type=text]{flex:1; min-width:140px;}
+  .add-row button{background:var(--navy); color:#fff; padding:10px 16px; border-radius:8px; font-size:0.87rem; font-weight:600;}
+  .add-row button:hover{background:var(--navy-2);}
+
+  .task-list, .txn-list{list-style:none; margin-top:16px;}
+  .task-item{
+    display:flex; align-items:flex-start; gap:12px; padding:12px 0; border-bottom:1px solid var(--border);
+  }
+  .task-item:last-child{border-bottom:none;}
+  .task-item input[type=checkbox]{margin-top:3px; width:17px; height:17px; accent-color:var(--green); cursor:pointer;}
+  .task-item .t-body{flex:1;}
+  .task-item .t-title{font-size:0.93rem; font-weight:500; color:var(--navy);}
+  .task-item.done .t-title{text-decoration:line-through; color:var(--gray-light);}
+  .task-item .t-meta{display:flex; gap:8px; margin-top:4px; align-items:center;}
+  .pill{font-size:0.7rem; font-weight:600; padding:2px 8px; border-radius:20px;}
+  .pill.high{background:#FBE4E2; color:var(--red);}
+  .pill.medium{background:#FDEBD8; color:var(--orange-dark);}
+  .pill.low{background:var(--green-light); color:var(--green);}
+  .t-date{font-size:0.74rem; color:var(--gray-light);}
+  .del-btn{background:none; color:var(--gray-light); font-size:1rem; padding:2px 6px; border-radius:6px;}
+  .del-btn:hover{color:var(--red); background:#FBE4E2;}
+
+  .txn-item{display:flex; justify-content:space-between; align-items:center; padding:11px 0; border-bottom:1px solid var(--border); gap:10px;}
+  .txn-item:last-child{border-bottom:none;}
+  .txn-left{display:flex; flex-direction:column;}
+  .txn-desc{font-size:0.9rem; font-weight:500; color:var(--navy);}
+  .txn-cat{font-size:0.74rem; color:var(--gray-light); margin-top:2px;}
+  .txn-amt{font-family:'Space Grotesk'; font-weight:600; font-size:0.92rem; white-space:nowrap;}
+  .txn-amt.income{color:var(--green);}
+  .txn-amt.expense{color:var(--red);}
+
+  .goal-item{padding:16px 0; border-bottom:1px solid var(--border);}
+  .goal-item:last-child{border-bottom:none;}
+  .goal-top{display:flex; justify-content:space-between; font-size:0.9rem; font-weight:600; color:var(--navy); margin-bottom:8px;}
+  .goal-bar-track{height:8px; background:var(--border); border-radius:6px; overflow:hidden;}
+  .goal-bar-fill{height:100%; background:var(--green); border-radius:6px; transition:width .3s;}
+  .goal-nums{display:flex; justify-content:space-between; font-size:0.76rem; color:var(--gray-light); margin-top:6px;}
+  .goal-add{margin-top:8px; display:flex; gap:6px;}
+  .goal-add input{width:80px; padding:6px 8px; border-radius:6px; border:1px solid var(--border); font-size:0.78rem;}
+  .goal-add button{padding:6px 10px; border-radius:6px; background:var(--green-light); color:var(--green); font-size:0.75rem; font-weight:600;}
+
+  .empty-state{padding:24px 0; text-align:center; color:var(--gray-light); font-size:0.85rem;}
+
+  .toolbar{display:flex; gap:8px; margin-top:14px; flex-wrap:wrap;}
+  .toolbar input, .toolbar select{padding:7px 10px; border-radius:8px; border:1px solid var(--border); font-size:0.8rem; font-family:'Inter'; background:#fff; color:var(--navy);}
+  .toolbar input[type=text]{flex:1; min-width:110px;}
+  .head-actions{display:flex; gap:8px; flex-wrap:wrap;}
+  .head-actions .reset.soft{color:var(--navy-2);}
+  .head-actions .reset.soft:hover{color:var(--navy); border-color:var(--navy);}
+  .edit-btn{background:none; color:var(--gray-light); font-size:0.95rem; padding:2px 6px; border-radius:6px;}
+  .edit-btn:hover{color:var(--navy); background:var(--cream);}
+  .pill.overdue{background:var(--red); color:#fff;}
+  .budget-bar{height:10px; background:var(--border); border-radius:6px; overflow:hidden; margin-top:14px;}
+  .budget-fill{height:100%; border-radius:6px; background:var(--green); transition:width .3s, background .3s;}
+  .budget-fill.warn{background:var(--orange);}
+  .budget-fill.over{background:var(--red);}
+  .budget-text{font-size:0.8rem; color:var(--gray); margin-top:8px;}
+  .budget-text strong{color:var(--navy);}
+  .cat-row{margin-top:12px;}
+  .cat-top{display:flex; justify-content:space-between; font-size:0.82rem; color:var(--navy); font-weight:500; margin-bottom:4px;}
+  .cat-top span:last-child{color:var(--gray); font-weight:400;}
+  .cat-track{height:8px; background:var(--border); border-radius:6px; overflow:hidden;}
+  .cat-fill{height:100%; background:var(--navy-2); border-radius:6px;}
+  .toast{position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:var(--navy); color:#fff; padding:11px 20px; border-radius:10px; font-size:0.85rem; z-index:100; opacity:0; pointer-events:none; transition:opacity .25s;}
+  .toast.show{opacity:1;}
+  button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid var(--orange); outline-offset:2px;}
+  .nav .right{display:flex; align-items:center; gap:8px;}
+  .menu-btn{display:none; background:none; color:var(--navy); font-size:1.5rem; padding:4px 10px; line-height:1;}
+  @media (max-width:760px){
+    .menu-btn{display:block;}
+    .navlinks.open{display:flex; flex-direction:column; position:absolute; top:100%; left:0; right:0; background:var(--cream); padding:16px 24px; gap:14px; border-bottom:1px solid var(--border);}
+  }
+  dialog{border:none; border-radius:14px; padding:26px; width:min(420px,92vw); box-shadow:0 20px 60px rgba(15,36,57,.3); color:var(--ink); margin:auto;}
+  dialog::backdrop{background:rgba(15,36,57,.5);}
+  dialog label{display:block; font-size:.8rem; font-weight:600; color:var(--gray); margin-top:12px;}
+  dialog input,dialog select{width:100%; margin-top:4px; padding:10px 12px; border-radius:8px; border:1px solid var(--border); font:inherit; font-size:.92rem; background:var(--cream); color:var(--navy);}
+  .dlg-actions{display:flex; gap:8px; justify-content:flex-end; margin-top:22px;}
+  .dlg-actions button{padding:10px 18px; border-radius:8px; font-weight:600;}
+  .dlg-actions .ok{background:var(--navy); color:#fff;}
+  .dlg-actions .cancel{background:var(--cream); color:var(--navy);}
+  .toast.show{pointer-events:auto;}
+  .toast button{background:none; color:var(--orange); font-weight:700; margin-left:14px; text-decoration:underline; font-size:.85rem;}
+  .month-row{display:flex; gap:8px; align-items:center; margin-bottom:14px; font-size:.82rem; color:var(--gray); flex-wrap:wrap;}
+  .month-row input{padding:6px 10px; border-radius:8px; border:1px solid var(--border); background:#fff; color:var(--navy);}
+  .mini-btn{background:#fff; border:1px solid var(--border); padding:6px 12px; border-radius:8px; font-size:.78rem; color:var(--navy-2);}
+  .eq-card{display:flex; gap:18px; align-items:center; margin-top:10px;}
+  .eq-card svg{width:150px; flex-shrink:0;}
+  .eq-card p{font-size:.86rem; color:var(--navy-2);}
+  .mrow{display:grid; grid-template-columns:52px 1fr; gap:8px; align-items:center; margin-top:10px; font-size:.78rem; color:var(--gray);}
+  .mbars div{height:7px; border-radius:4px; margin:2px 0; min-width:2px;}
+  .mbars .i{background:var(--green);} .mbars .e{background:var(--red);}
+
+  /* ===== ADAPTACION A TODOS LOS DISPOSITIVOS ===== */
+  html{-webkit-text-size-adjust:100%; text-size-adjust:100%;}
+  body{padding-left:env(safe-area-inset-left,0px); padding-right:env(safe-area-inset-right,0px); overflow-x:hidden;}
+  #app-view{min-height:100vh; min-height:100dvh;}
+  .summary-row{grid-template-columns:repeat(auto-fit,minmax(170px,1fr));}
+  .txn-left{min-width:0; flex:1;}
+  .txn-desc,.t-title,.goal-top span:first-child{overflow-wrap:anywhere;}
+  .add-row input,.add-row select,.toolbar input,.toolbar select,.month-row input{min-width:0; max-width:100%;}
+  .add-row > *{flex:1 1 130px;}
+  .add-row button{flex:0 0 auto;}
+  dialog{max-height:90vh; max-height:90dvh; overflow:auto;}
+  .toast{max-width:90vw; bottom:calc(24px + env(safe-area-inset-bottom,0px)); text-align:center;}
+  .wrap,.nav,.hero-inner,.dash{width:100%;}
+  @media (min-width:1400px){ .wrap,.nav,.hero-inner,.dash{max-width:1240px;} }
+
+  /* tablet y celular vertical */
+  @media (max-width:760px){
+    .nav{padding:12px 20px;}
+    section{padding:52px 0;}
+    .app-topbar{padding:12px 20px;}
+    .dash{padding:24px 16px 64px;}
+    .panel{padding:18px;}
+    .head-actions .reset{font-size:.74rem; padding:7px 10px;}
+    .hero-inner{padding:44px 20px 48px; gap:36px;}
+    .hero-ctas > *{flex:1 1 100%; text-align:center;}
+    .gate{margin:32px 16px; padding:32px 22px; max-width:none;}
+  }
+  @media (max-width:480px){
+    .add-row button{flex:1 1 100%;}
+    .eq-card{flex-direction:column; align-items:flex-start;}
+    .eq-card svg{width:130px;}
+    .panel h3{flex-wrap:wrap; gap:4px;}
+    .footer,footer{padding:28px 16px;}
+  }
+
+  /* celular horizontal (poca altura) */
+  @media (orientation:landscape) and (max-height:520px){
+    section{padding:40px 0;}
+    .nav{padding:8px 24px;}
+    .hero-inner{grid-template-columns:1.05fr .95fr; padding:28px 24px; gap:28px;}
+    .hero h1{font-size:clamp(1.8rem,5vw,2.4rem);}
+    .hero p.lead{margin-top:10px;}
+    .hero-ctas{margin-top:18px;}
+    .scale-card svg{max-height:170px;}
+    .app-topbar{padding:8px 24px; position:static;}
+    .gate{margin:16px auto;}
+    .dash{padding-top:16px;}
+    dialog{padding:18px;}
+  }
+  /* horizontal con ancho suficiente: dos columnas en el panel */
+  @media (orientation:landscape) and (min-width:700px){
+    .panel-grid{grid-template-columns:1.2fr 1fr;}
+  }
+
+  /* pantallas tactiles: objetivos de toque grandes y sin zoom al escribir (iOS) */
+  @media (pointer:coarse){
+    input,select,textarea{font-size:16px !important;}
+    .add-row button,.toolbar select,.toolbar input,.month-row input,.mini-btn,.head-actions .reset,.goal-add button,.nav-cta,.btn-primary,.btn-secondary{min-height:44px;}
+    .del-btn,.edit-btn{min-width:42px; min-height:42px; font-size:1.1rem;}
+    .task-item input[type=checkbox]{width:24px; height:24px; margin-top:1px;}
+    input[type=range]{height:8px;}
+    input[type=range]::-webkit-slider-thumb{width:28px; height:28px;}
+    input[type=range]::-moz-range-thumb{width:28px; height:28px;}
+    .goal-add input{width:100px;}
+    .navlinks a{padding:6px 0;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    *{transition:none !important; animation:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ MARKETING SITE ============ -->
+<div id="site-view">
+
+<header class="site">
+  <nav class="nav">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="20" y1="6" x2="20" y2="30" stroke="#E8873A" stroke-width="2.4" stroke-linecap="round"/>
+        <line x1="7" y1="12" x2="33" y2="12" stroke="#16324F" stroke-width="2.4" stroke-linecap="round"/>
+        <path d="M7 12 L3 20 A5 5 0 0 0 11 20 Z" fill="none" stroke="#2E9B6F" stroke-width="2.2" stroke-linejoin="round"/>
+        <path d="M33 12 L29 20 A5 5 0 0 0 37 20 Z" fill="none" stroke="#16324F" stroke-width="2.2" stroke-linejoin="round"/>
+        <circle cx="20" cy="6" r="2.6" fill="#E8873A"/>
+        <rect x="14" y="31" width="12" height="4" rx="1.5" fill="#16324F"/>
+      </svg>
+      Balance
+    </div>
+    <div class="navlinks">
+      <a href="#problema">El problema</a>
+      <a href="#usuarios">Para quién</a>
+      <a href="#funciones">Qué incluye</a>
+      <a href="#alcance">Versión beta</a>
+    </div>
+    <div class="right"><button class="nav-cta" onclick="openApp()">Probar Balance</button><button class="menu-btn" aria-label="Abrir menú" onclick="toggleMenu()">☰</button></div>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="eyebrow">Organización personal · finanzas y tareas</div>
+      <h1>Equilibra tu dinero,<br>organiza tu vida.</h1>
+      <p class="lead">Balance reúne en un solo lugar lo que hoy vive repartido entre notas, calendarios y hojas de cálculo: tus tareas pendientes y el control de tus ingresos y gastos.</p>
+      <div class="hero-ctas">
+        <button class="btn-primary" onclick="openApp()">Probar Balance ahora</button>
+        <a href="#vista" class="btn-secondary">Ver cómo funciona</a>
+      </div>
+    </div>
+    <div class="scale-card">
+      <svg id="scaleSvg" viewBox="0 0 320 200" width="100%" xmlns="http://www.w3.org/2000/svg">
+        <line x1="160" y1="30" x2="160" y2="150" stroke="#E8873A" stroke-width="4" stroke-linecap="round"/>
+        <rect x="146" y="150" width="28" height="20" rx="3" fill="#3A5A7D"/>
+        <rect x="130" y="168" width="60" height="8" rx="3" fill="#3A5A7D"/>
+        <g id="beamGroup">
+          <line id="beam" x1="70" y1="60" x2="250" y2="60" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="160" cy="60" r="5" fill="#E8873A"/>
+          <g id="leftPan">
+            <line id="leftString" x1="70" y1="60" x2="70" y2="95" stroke="#8DA0BA" stroke-width="1.6"/>
+            <path d="M52 95 L88 95 L82 112 A18 18 0 0 1 58 112 Z" fill="#2E9B6F" opacity="0.9"/>
+            <circle cx="70" cy="100" r="7" fill="#fff"/>
+            <text x="70" y="104" font-size="9" text-anchor="middle" fill="#16324F" font-family="Space Grotesk" font-weight="700">$</text>
+          </g>
+          <g id="rightPan">
+            <line id="rightString" x1="250" y1="60" x2="250" y2="95" stroke="#8DA0BA" stroke-width="1.6"/>
+            <path d="M232 95 L268 95 L262 112 A18 18 0 0 1 238 112 Z" fill="#E8873A" opacity="0.9"/>
+            <rect x="243" y="93" width="14" height="12" rx="1.5" fill="#fff"/>
+            <line x1="245.5" y1="96" x2="254.5" y2="96" stroke="#16324F" stroke-width="1.2"/>
+            <line x1="245.5" y1="99" x2="254.5" y2="99" stroke="#16324F" stroke-width="1.2"/>
+            <line x1="245.5" y1="102" x2="251" y2="102" stroke="#16324F" stroke-width="1.2"/>
+          </g>
+        </g>
+      </svg>
+      <div class="slider-row">
+        <span>Finanzas</span>
+        <input type="range" id="balanceSlider" aria-label="Balance entre finanzas y tareas" min="0" max="100" value="50" oninput="updateScale(this.value)">
+        <span class="right">Tareas</span>
+      </div>
+      <p class="hint" id="balanceHint">Así se ve tu vida cuando ambos lados están cuidados por igual.</p>
+    </div>
+  </div>
+</section>
+
+<section id="vista" style="background:var(--card); border-bottom:1px solid var(--border);">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">Cómo funciona</div>
+      <h2>Tu panel, de un vistazo</h2>
+      <p>Así se ve Balance apenas entras: finanzas, tareas y metas en el mismo lugar.</p>
+    </div>
+    <div class="summary-row" style="margin-bottom:0;">
+      <div class="sum-card"><div class="label">Balance financiero</div><div class="value positive">$ 420.000</div><div class="sub">$ 1.200.000 ingresos · $ 780.000 gastos</div></div>
+      <div class="sum-card"><div class="label">Tareas pendientes</div><div class="value">4</div><div class="sub">6 completadas de 10</div></div>
+      <div class="sum-card"><div class="label">Metas de ahorro</div><div class="value">65%</div><div class="sub">2 metas activas</div></div>
+    </div>
+    <p style="margin-top:16px; color:var(--gray); font-size:.85rem;">Datos de ejemplo. <a href="#app" onclick="openApp();return false;" style="color:var(--orange-dark); font-weight:600;">Prueba con los tuyos</a></p>
+  </div>
+</section>
+
+<section id="problema">
+  <div class="wrap problem-grid">
+    <div class="section-head" style="margin-bottom:0;">
+      <div class="kicker">El problema</div>
+      <h2>La organización vive repartida en demasiados lugares</h2>
+      <p>Muchas personas usan notas, calendarios, hojas de cálculo o apuntes en papel para controlar por separado sus gastos, ingresos y pendientes. El resultado: olvidos, gastos innecesarios y ninguna vista clara de cómo van realmente el tiempo y el dinero.</p>
+    </div>
+    <div>
+      <ul class="tool-list">
+        <li><span class="dot"></span>Notas del celular para apuntar tareas sueltas, sin prioridades ni fechas claras.</li>
+        <li><span class="dot"></span>Calendarios y agendas separados del control de gastos.</li>
+        <li><span class="dot"></span>Hojas de cálculo o cuadernos para llevar ingresos y gastos manualmente.</li>
+        <li><span class="dot"></span>Ninguna vista conjunta de cómo van el tiempo y el dinero a la vez.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="usuarios" style="background:var(--card); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">Para quién es</div>
+      <h2>Pensado para quien equilibra varias responsabilidades a la vez</h2>
+      <p>Estudiantes como usuario principal, y trabajadores y jóvenes adultos como públicos secundarios que buscan mejorar su planificación personal y financiera.</p>
+    </div>
+    <table class="users-table">
+      <thead>
+        <tr><th>Usuario</th><th>Necesidad</th><th>Beneficio esperado</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="who">Estudiante</td><td>Organizar gastos y tareas académicas</td><td>Mejor control de su dinero y cumplimiento de actividades</td></tr>
+        <tr><td class="who">Joven adulto</td><td>Controlar sus finanzas y responsabilidades</td><td>Mejorar su organización y hábitos de ahorro</td></tr>
+        <tr><td class="who">Trabajador</td><td>Administrar gastos y tareas diarias</td><td>Aprovechar mejor su tiempo y controlar sus gastos</td></tr>
+        <tr><td class="who">Usuario general</td><td>Tener dinero y tareas organizados en un solo lugar</td><td>Mayor comodidad, control y organización</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="funciones" class="feat-band">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">Qué incluye la versión beta</div>
+      <h2>Todo lo necesario para tomar el control, sin complicarlo</h2>
+      <p>La primera versión de Balance se concentra en lo esencial: tareas y finanzas, en un mismo panel.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat-item">
+        <svg class="icon" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="17" rx="2.5" stroke="#E8873A" stroke-width="1.8"/><path d="M8 9l2.2 2.2L14 7.5" stroke="#E8873A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><line x1="7" y1="15" x2="17" y2="15" stroke="#3A5A7D" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <h4>Tareas con prioridad</h4>
+        <p>Crea, edita, completa y elimina tareas con fecha y nivel de prioridad.</p>
+      </div>
+      <div class="feat-item">
+        <svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M3 17l5-5 4 4 9-9" stroke="#E8873A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 7h6v6" stroke="#E8873A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h4>Ingresos y gastos</h4>
+        <p>Registra movimientos por categoría y consulta tu balance financiero al instante.</p>
+      </div>
+      <div class="feat-item">
+        <svg class="icon" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#E8873A" stroke-width="1.8"/><path d="M12 7v5l3.5 2" stroke="#E8873A" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <h4>Metas de ahorro</h4>
+        <p>Define un objetivo y sigue tu progreso con una barra clara de avance.</p>
+      </div>
+      <div class="feat-item">
+        <svg class="icon" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="8" height="8" rx="1.6" stroke="#E8873A" stroke-width="1.8"/><rect x="13" y="3" width="8" height="8" rx="1.6" stroke="#E8873A" stroke-width="1.8"/><rect x="3" y="13" width="8" height="8" rx="1.6" stroke="#E8873A" stroke-width="1.8"/><rect x="13" y="13" width="8" height="8" rx="1.6" stroke="#E8873A" stroke-width="1.8"/></svg>
+        <h4>Panel principal</h4>
+        <p>Un resumen único de tus tareas y tus finanzas apenas entras.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="alcance">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">Versión beta</div>
+      <h2>Qué incluye esta primera versión y qué queda para más adelante</h2>
+      <p>Balance nace enfocado en organización personal, no en operar dinero real todavía.</p>
+    </div>
+    <div class="scope-grid">
+      <div class="scope-card yes">
+        <h3>Incluido en esta versión</h3>
+        <ul>
+          <li>Cuenta con correo y contraseña; tus datos se guardan en la nube</li>
+          <li>Crear, editar, completar y eliminar tareas</li>
+          <li>Fechas y prioridades para las tareas</li>
+          <li>Registro de ingresos y gastos por categoría</li>
+          <li>Consulta del balance financiero</li>
+          <li>Metas de ahorro con seguimiento de progreso</li>
+          <li>Filtros, búsqueda y orden en tareas y movimientos</li>
+          <li>Presupuesto mensual con alertas y gráfico de gastos por categoría</li>
+          <li>Exportar a CSV y copia de seguridad (JSON)</li>
+          <li>Resumen por mes, comparativo de 6 meses y medidor de equilibrio</li>
+          <li>Edición en ventana y botón «Deshacer» al borrar</li>
+        </ul>
+      </div>
+      <div class="scope-card no">
+        <h3>Fuera de esta versión</h3>
+        <ul>
+          <li>Conexión con cuentas bancarias</li>
+          <li>Transferencias bancarias</li>
+          <li>Pagos desde la plataforma</li>
+          <li>Conexión con tarjetas de crédito o débito</li>
+          <li>Inteligencia artificial para administrar finanzas</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="wrap">
+    <h2>Todo en equilibrio, todo bajo control.</h2>
+    <p>Empieza a organizar tus tareas y tus finanzas desde un mismo lugar.</p>
+    <button class="btn-primary" onclick="openApp()">Probar Balance ahora</button>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">Balance — Proyecto académico, Desarrollo de Aplicaciones Web · Universidad Ecci</div>
+</footer>
+
+</div>
+
+<!-- ============ APP VIEW ============ -->
+<div id="app-view">
+  <div class="app-topbar">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 40 40" fill="none" width="26" height="26" xmlns="http://www.w3.org/2000/svg">
+        <line x1="20" y1="6" x2="20" y2="30" stroke="#E8873A" stroke-width="2.4" stroke-linecap="round"/>
+        <line x1="7" y1="12" x2="33" y2="12" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/>
+        <path d="M7 12 L3 20 A5 5 0 0 0 11 20 Z" fill="none" stroke="#2E9B6F" stroke-width="2.2" stroke-linejoin="round"/>
+        <path d="M33 12 L29 20 A5 5 0 0 0 37 20 Z" fill="none" stroke="#fff" stroke-width="2.2" stroke-linejoin="round"/>
+        <circle cx="20" cy="6" r="2.6" fill="#E8873A"/>
+        <rect x="14" y="31" width="12" height="4" rx="1.5" fill="#fff"/>
+      </svg>
+      Balance
+    </div>
+    <button class="back" onclick="closeApp()">← Volver al sitio</button>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <dialog id="dlg"><h3 id="dlgTitle"></h3><div id="dlgBody"></div><div class="dlg-actions"><button class="cancel" onclick="closeDlg()">Cancelar</button><button class="ok" onclick="saveDlg()">Guardar</button></div></dialog>
+
+  <div id="gate-view" class="gate">
+    <svg class="mark" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="20" y1="6" x2="20" y2="30" stroke="#E8873A" stroke-width="2.4" stroke-linecap="round"/>
+      <line x1="7" y1="12" x2="33" y2="12" stroke="#16324F" stroke-width="2.4" stroke-linecap="round"/>
+      <path d="M7 12 L3 20 A5 5 0 0 0 11 20 Z" fill="none" stroke="#2E9B6F" stroke-width="2.2" stroke-linejoin="round"/>
+      <path d="M33 12 L29 20 A5 5 0 0 0 37 20 Z" fill="none" stroke="#16324F" stroke-width="2.2" stroke-linejoin="round"/>
+      <circle cx="20" cy="6" r="2.6" fill="#E8873A"/>
+      <rect x="14" y="31" width="12" height="4" rx="1.5" fill="#16324F"/>
+    </svg>
+    <h2>Entra a tu panel</h2>
+    <p>Tus tareas, movimientos y metas se guardan en tu cuenta y los ves desde cualquier dispositivo.</p>
+    <input type="text" id="nameInput" placeholder="Tu nombre (solo al crear cuenta)" maxlength="30" autocomplete="name">
+    <input type="email" id="emailInput" placeholder="Correo electrónico" autocomplete="email" style="margin-top:12px;">
+    <input type="password" id="passInput" placeholder="Contraseña (mínimo 6 caracteres)" autocomplete="current-password" style="margin-top:12px;">
+    <button id="btnSignIn" onclick="signIn()">Iniciar sesión</button>
+    <button id="btnSignUp" onclick="signUp()" style="background:transparent; color:var(--navy); border:1px solid var(--border);">Crear cuenta</button>
+    <p class="note" id="authMsg" role="alert" style="font-size:.85rem; color:var(--red); min-height:1.2em;"></p>
+  </div>
+
+  <div id="dash-view" class="dash" style="display:none;">
+    <div class="dash-head">
+      <div>
+        <h1 id="greeting">Hola</h1>
+        <p>Este es tu panel principal — tareas y finanzas en un mismo lugar.</p>
+        <p id="syncStatus" style="font-size:.78rem; margin-top:2px;"></p>
+      </div>
+      <div class="head-actions">
+        <button class="reset soft" onclick="logout()">Cerrar sesión</button>
+        <button class="reset soft" onclick="exportCSV()">Exportar CSV</button>
+        <button class="reset soft" onclick="exportJSON()">Copia de seguridad</button>
+        <button class="reset soft" onclick="document.getElementById('importFile').click()">Importar</button>
+        <button class="reset" onclick="resetAll()">Borrar mis datos</button>
+        <input type="file" id="importFile" accept="application/json,.json" style="display:none" onchange="importJSON(event)">
+      </div>
+    </div>
+
+    <div class="month-row"><label for="sumMonth">Resumen de:</label><input type="month" id="sumMonth" onchange="renderAll()"><button class="mini-btn" onclick="document.getElementById('sumMonth').value='';renderAll()">Todo el historial</button></div>
+    <div class="summary-row">
+      <div class="sum-card">
+        <div class="label">Balance financiero</div>
+        <div class="value" id="sumBalance">$0</div>
+        <div class="sub" id="sumBalanceSub">Ingresos menos gastos</div>
+      </div>
+      <div class="sum-card">
+        <div class="label">Tareas pendientes</div>
+        <div class="value" id="sumTasks">0</div>
+        <div class="sub" id="sumTasksSub">Sin completar</div>
+      </div>
+      <div class="sum-card">
+        <div class="label">Metas de ahorro</div>
+        <div class="value" id="sumGoals">0%</div>
+        <div class="sub" id="sumGoalsSub">Progreso promedio</div>
+      </div>
+    </div>
+
+    <div class="panel-grid">
+      <div>
+        <div class="panel">
+          <h3>Tareas <span class="count" id="taskCount">0 pendientes</span></h3>
+          <div class="add-row">
+            <input type="text" id="taskInput" placeholder="Nueva tarea…">
+            <select id="taskPriority">
+              <option value="low">Baja</option>
+              <option value="medium" selected>Media</option>
+              <option value="high">Alta</option>
+            </select>
+            <input type="date" id="taskDate">
+            <button onclick="addTask()">Añadir</button>
+          </div>
+          <div class="toolbar">
+            <select id="taskFilter" onchange="renderTasks()">
+              <option value="all">Todas</option>
+              <option value="pending">Pendientes</option>
+              <option value="done">Completadas</option>
+            </select>
+            <select id="taskSort" onchange="renderTasks()">
+              <option value="recent">Más recientes</option>
+              <option value="priority">Por prioridad</option>
+              <option value="date">Por fecha límite</option>
+            </select>
+          </div>
+          <ul class="task-list" id="taskList"></ul>
+        </div>
+
+        <div class="panel">
+          <h3>Ingresos y gastos <span class="count" id="txnCount">0 movimientos</span></h3>
+          <div class="add-row">
+            <input type="text" id="txnDesc" placeholder="Descripción…">
+            <input type="number" id="txnAmount" placeholder="Monto" style="width:90px;" min="0">
+            <input type="date" id="txnDate">
+            <select id="txnType">
+              <option value="income">Ingreso</option>
+              <option value="expense" selected>Gasto</option>
+            </select>
+            <select id="txnCategory">
+              <option>General</option>
+              <option>Comida</option>
+              <option>Transporte</option>
+              <option>Estudio</option>
+              <option>Ocio</option>
+              <option>Vivienda</option>
+              <option>Salario</option>
+              <option>Salud</option>
+              <option>Servicios</option>
+              <option>Ahorro</option>
+            </select>
+            <button onclick="addTxn()">Añadir</button>
+          </div>
+          <div class="toolbar">
+            <input type="text" id="txnSearch" placeholder="Buscar…" oninput="renderTxns()">
+            <select id="txnFilterType" onchange="renderTxns()">
+              <option value="all">Todos</option>
+              <option value="income">Ingresos</option>
+              <option value="expense">Gastos</option>
+            </select>
+            <select id="txnFilterCat" onchange="renderTxns()"><option value="all">Todas las categorías</option></select>
+            <input type="month" id="txnFilterMonth" onchange="renderTxns()" title="Filtrar por mes">
+          </div>
+          <ul class="txn-list" id="txnList"></ul>
+        </div>
+      </div>
+
+      <div>
+        <div class="panel">
+          <h3>Tu equilibrio</h3>
+          <div class="eq-card">
+            <svg id="eqSvg" viewBox="0 0 320 180" aria-hidden="true"><line x1="160" y1="30" x2="160" y2="150" stroke="#E8873A" stroke-width="4" stroke-linecap="round"/><rect x="130" y="150" width="60" height="10" rx="3" fill="#16324F"/><g id="eqBeam"><line x1="70" y1="60" x2="250" y2="60" stroke="#16324F" stroke-width="4" stroke-linecap="round"/><circle cx="160" cy="60" r="5" fill="#E8873A"/><g id="eqL"><line x1="70" y1="60" x2="70" y2="95" stroke="#6B7689" stroke-width="1.6"/><path d="M52 95 L88 95 L82 112 A18 18 0 0 1 58 112 Z" fill="#2E9B6F"/></g><g id="eqR"><line x1="250" y1="60" x2="250" y2="95" stroke="#6B7689" stroke-width="1.6"/><path d="M232 95 L268 95 L262 112 A18 18 0 0 1 238 112 Z" fill="#E8873A"/></g></g></svg>
+            <p id="eqText"></p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>Ingresos vs. gastos <span class="count">últimos 6 meses</span></h3>
+          <div id="monthChart"></div>
+        </div>
+
+        <div class="panel">
+          <h3>Presupuesto mensual <span class="count" id="budgetMonth"></span></h3>
+          <div class="add-row">
+            <input type="number" id="budgetInput" placeholder="Límite de gastos del mes $" min="0" style="flex:1; min-width:140px;">
+            <button onclick="setBudget()">Guardar</button>
+          </div>
+          <div class="budget-bar"><div class="budget-fill" id="budgetFill" style="width:0%"></div></div>
+          <div class="budget-text" id="budgetText">Define un límite para recibir alertas.</div>
+        </div>
+
+        <div class="panel">
+          <h3>Gastos por categoría <span class="count" id="chartNote">según filtros</span></h3>
+          <div id="catChart"></div>
+        </div>
+
+        <div class="panel">
+          <h3>Metas de ahorro <span class="count" id="goalCount">0 metas</span></h3>
+          <div class="add-row">
+            <input type="text" id="goalName" placeholder="Nombre de la meta…">
+            <input type="number" id="goalTarget" placeholder="Objetivo $" style="width:100px;">
+            <button onclick="addGoal()">Crear</button>
+          </div>
+          <div id="goalList"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4"></script>
+<script>
+// Supabase: completa estos dos valores con los datos de tu proyecto.
+// Usa la URL del proyecto y la clave PUBLICABLE (sb_publishable_).
+// Nunca pegues aquí una clave secreta ni service_role.
+const SUPABASE_URL = 'https://ewdwvqlqwdbyuagwnolz.supabase.co';
+const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_oXOXKeoVmsXOOmqOnq_-YQ_lajR5YXa';
+const db = (typeof supabase !== 'undefined' && SUPABASE_URL.startsWith('https://') &&
+            SUPABASE_PUBLISHABLE_KEY.startsWith('sb_publishable_'))
+  ? supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY)
+  : null;
+
+/* ---------------- View switching ---------------- */
+function showApp(){
+  document.getElementById('site-view').style.display = 'none';
+  document.getElementById('app-view').style.display = 'block';
+  window.scrollTo(0,0);
+  checkSession();
+}
+function showSite(){
+  document.getElementById('app-view').style.display = 'none';
+  document.getElementById('site-view').style.display = 'block';
+  window.scrollTo(0,0);
+}
+function openApp(){ if(location.hash !== '#app') location.hash = 'app'; else showApp(); }
+function closeApp(){
+  try{ history.pushState(null,'',location.pathname+location.search); }catch(e){ location.hash=''; }
+  showSite();
+}
+window.addEventListener('hashchange', ()=>{
+  if(location.hash === '#app') showApp();
+  else if(document.getElementById('app-view').style.display === 'block') showSite();
+});
+function toggleMenu(){ document.querySelector('.navlinks').classList.toggle('open'); }
+
+/* ---------------- Hero balance slider ---------------- */
+function updateScale(val){
+  const v = Number(val);
+  const tilt = (v - 50) / 50 * 14; // degrees
+  const beamGroup = document.getElementById('beamGroup');
+  beamGroup.setAttribute('transform', `rotate(${tilt} 160 60)`);
+  document.getElementById('leftPan').setAttribute('transform', `rotate(${-tilt} 70 60)`);
+  document.getElementById('rightPan').setAttribute('transform', `rotate(${-tilt} 250 60)`);
+  const hint = document.getElementById('balanceHint');
+  const status = Math.abs(v-50);
+  if(status < 6){
+    hint.textContent = 'Así se ve tu vida cuando ambos lados están cuidados por igual.';
+  } else if(v < 50){
+    hint.textContent = 'Cuando el dinero pesa más, las tareas empiezan a quedarse atrás.';
+  } else {
+    hint.textContent = 'Cuando las tareas pesan más, las finanzas se descuidan.';
+  }
+}
+
+/* ---------------- Sesion y datos (Supabase) ---------------- */
+let currentUser = null, currentUserId = null, saveTimer = null, synced = null;
+function defaultState(){ return { tasks: [], txns: [], goals: [], budget: 0 }; }
+let state = defaultState();
+const KEY = id => 'balance:cache:' + id;   // copia local por usuario (respaldo sin conexion)
+function uid(){ return Date.now()*1000 + Math.floor(Math.random()*1000); }
+
+function setSync(ok){
+  const el = document.getElementById('syncStatus');
+  el.textContent = ok ? '☁ Guardado en tu cuenta' : '⚠ Sin conexión con la nube: guardado solo en este dispositivo';
+  el.style.color = ok ? 'var(--green)' : 'var(--red)';
+}
+/* estado de la app -> filas de las tablas (tasks, transactions, goals) */
+function rowsOf(st){
+  const m = (arr, fn) => new Map(arr.map(x=>[x.id, fn(x)]));
+  return {
+    tasks: m(st.tasks, t=>({ id:t.id, title:t.title, priority:t.priority, due_date:t.date||null, completed:!!t.done })),
+    txns:  m(st.txns.filter(t=>t.amount>0), t=>({ id:t.id, description:t.desc, amount:t.amount, type:t.type, category:t.category||'General', transaction_date:t.date||todayStr() })),
+    goals: m(st.goals.filter(g=>g.target>0), g=>({ id:g.id, name:g.name, target:g.target, current_amount:g.current }))
+  };
+}
+const TABLES = { tasks:'tasks', txns:'transactions', goals:'goals' };
+
+/* sube solo lo que cambio (altas, ediciones y borrados) */
+async function pushState(){
+  saveTimer = null;
+  if(!db || !currentUserId) return;
+  const me = currentUserId, now = rowsOf(state), nowBudget = state.budget || 0;
+  try{
+    for(const [k, table] of Object.entries(TABLES)){
+      const prev = synced ? synced[k] : new Map(), up = [], del = [];
+      now[k].forEach((row,id)=>{ if(!prev.has(id) || JSON.stringify(prev.get(id)) !== JSON.stringify(row)) up.push({ ...row, user_id:me, updated_at:new Date().toISOString() }); });
+      prev.forEach((_,id)=>{ if(!now[k].has(id)) del.push(id); });
+      if(up.length){ const { error } = await db.from(table).upsert(up, { onConflict:'user_id,id' }); if(error) throw error; }
+      if(del.length){ const { error } = await db.from(table).delete().eq('user_id', me).in('id', del); if(error) throw error; }
+    }
+    if(!synced || synced.budget !== nowBudget){
+      const { error } = await db.from('user_settings').upsert({ user_id:me, monthly_budget:nowBudget, updated_at:new Date().toISOString() });
+      if(error) throw error;
+    }
+    synced = { ...now, budget:nowBudget };
+    setSync(true);
+  }catch(e){ console.error(e); setSync(false); }
+}
+function saveState(){
+  try{ localStorage.setItem(KEY(currentUserId), JSON.stringify(state)); }catch(e){}
+  clearTimeout(saveTimer); saveTimer = setTimeout(pushState, 600);
+}
+document.addEventListener('visibilitychange', ()=>{ if(document.hidden && saveTimer){ clearTimeout(saveTimer); pushState(); } });
+
+async function loadState(){
+  state = defaultState(); synced = null;
+  let cached = false;
+  try{ const raw = localStorage.getItem(KEY(currentUserId)); if(raw){ state = Object.assign(defaultState(), JSON.parse(raw)); cached = true; } }catch(e){}
+  if(!db) return;
+  try{
+    const [t, x, g, c] = await Promise.all([
+      db.from('tasks').select('*').order('id', { ascending:false }),
+      db.from('transactions').select('*').order('id', { ascending:false }),
+      db.from('goals').select('*').order('id', { ascending:false }),
+      db.from('user_settings').select('monthly_budget').maybeSingle()
+    ]);
+    const err = t.error || x.error || g.error || c.error; if(err) throw err;
+    const cloudEmpty = !t.data.length && !x.data.length && !g.data.length && !c.data;
+    if(cloudEmpty && cached){ await pushState(); return; }   // primera vez: sube la copia local
+    state = {
+      tasks: t.data.map(r=>({ id:Number(r.id), title:r.title, priority:r.priority, date:r.due_date||'', done:r.completed })),
+      txns:  x.data.map(r=>({ id:Number(r.id), desc:r.description, amount:Number(r.amount), type:r.type, category:r.category, date:r.transaction_date })),
+      goals: g.data.map(r=>({ id:Number(r.id), name:r.name, target:Number(r.target), current:Number(r.current_amount) })),
+      budget: Number(c.data && c.data.monthly_budget) || 0
+    };
+    synced = { ...rowsOf(state), budget:state.budget };
+    setSync(true);
+  }catch(e){ console.error(e); setSync(false); }
+}
+
+function authMsg(m){ document.getElementById('authMsg').textContent = m || ''; }
+function authError(e){
+  const m = (e && e.message) || 'Error desconocido';
+  if(/invalid login/i.test(m)) return 'Correo o contraseña incorrectos.';
+  if(/already registered/i.test(m)) return 'Ese correo ya tiene una cuenta. Inicia sesión.';
+  if(/email not confirmed/i.test(m)) return 'Confirma tu correo antes de entrar (revisa tu bandeja).';
+  if(/password/i.test(m) && /6/.test(m)) return 'La contraseña debe tener al menos 6 caracteres.';
+  if(/rate limit/i.test(m)) return 'Demasiados intentos. Espera un momento e inténtalo de nuevo.';
+  return m;
+}
+function showGate(){
+  document.getElementById('gate-view').style.display = 'block';
+  document.getElementById('dash-view').style.display = 'none';
+}
+async function enterUser(user){
+  currentUserId = user.id;
+  currentUser = (user.user_metadata && (user.user_metadata.display_name || user.user_metadata.name)) || (user.email || '').split('@')[0];
+  await loadState();
+  showDash();
+}
+async function checkSession(){
+  if(!db){ showGate(); authMsg('No se pudo cargar Supabase. Revisa tu conexión a internet.'); return; }
+  try{
+    const { data:{ session } } = await db.auth.getSession();
+    if(session){ await enterUser(session.user); return; }
+  }catch(e){}
+  showGate();
+}
+function readCreds(){
+  return { email: document.getElementById('emailInput').value.trim(), password: document.getElementById('passInput').value };
+}
+async function signIn(){
+  authMsg('');
+  if(!db){ authMsg('Supabase no está disponible.'); return; }
+  const { email, password } = readCreds();
+  if(!email || !password){ authMsg('Escribe tu correo y contraseña.'); return; }
+  const { data, error } = await db.auth.signInWithPassword({ email, password });
+  if(error){ authMsg(authError(error)); return; }
+  document.getElementById('passInput').value = '';
+  await enterUser(data.user);
+}
+async function signUp(){
+  authMsg('');
+  if(!db){ authMsg('Supabase no está disponible.'); return; }
+  const { email, password } = readCreds();
+  const name = document.getElementById('nameInput').value.trim().replace(/\s+/g,' ');
+  if(!name){ authMsg('Escribe tu nombre para crear la cuenta.'); document.getElementById('nameInput').focus(); return; }
+  if(!email || password.length < 6){ authMsg('Usa un correo válido y una contraseña de al menos 6 caracteres.'); return; }
+  const { data, error } = await db.auth.signUp({ email, password, options:{ data:{ display_name:name, name } } });
+  if(error){ authMsg(authError(error)); return; }
+  document.getElementById('passInput').value = '';
+  if(!data.session){ authMsg('Cuenta creada. Revisa tu correo para confirmarla y luego inicia sesión.'); document.getElementById('authMsg').style.color='var(--green)'; return; }
+  await enterUser(data.user);
+}
+
+let toastTimer;
+function toast(msg, undo){
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  if(undo){
+    const b = document.createElement('button'); b.textContent = 'Deshacer';
+    b.onclick = ()=>{ undo(); el.classList.remove('show'); };
+    el.appendChild(b);
+  }
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>el.classList.remove('show'), undo ? 6000 : 2600);
+}
+function withUndo(msg, fn){
+  const snap = JSON.stringify(state);
+  fn(); saveState(); renderAll();
+  toast(msg, ()=>{ state = Object.assign(defaultState(), JSON.parse(snap)); saveState(); renderAll(); });
+}
+function todayStr(){ return new Date().toLocaleDateString('en-CA'); }
+
+function showDash(){
+  document.getElementById('gate-view').style.display = 'none';
+  document.getElementById('dash-view').style.display = 'block';
+  document.getElementById('greeting').textContent = 'Hola, ' + currentUser;
+  document.getElementById('txnDate').value = todayStr();
+  document.getElementById('budgetInput').value = state.budget || '';
+  renderAll();
+}
+
+async function logout(){
+  if(saveTimer){ clearTimeout(saveTimer); await pushState(); }
+  try{ if(db) await db.auth.signOut(); }catch(e){}
+  currentUser = null; currentUserId = null; state = defaultState();
+  ['nameInput','emailInput','passInput'].forEach(id=>document.getElementById(id).value='');
+  authMsg(''); showGate();
+}
+function resetAll(){
+  if(!confirm('¿Borrar todas tus tareas, movimientos y metas guardadas en tu cuenta?')) return;
+  state = defaultState();
+  document.getElementById('budgetInput').value = '';
+  saveState();
+  renderAll();
+}
+
+/* ---------------- Tasks ---------------- */
+function addTask(){
+  const input = document.getElementById('taskInput');
+  const title = input.value.trim();
+  if(!title) return;
+  const priority = document.getElementById('taskPriority').value;
+  const date = document.getElementById('taskDate').value;
+  state.tasks.unshift({ id: uid(), title, priority, date, done:false });
+  input.value = '';
+  document.getElementById('taskDate').value = '';
+  saveState(); renderAll();
+}
+function toggleTask(id){
+  const t = state.tasks.find(x=>x.id===id);
+  if(t){ t.done = !t.done; saveState(); renderAll(); }
+}
+function deleteTask(id){ withUndo('Tarea eliminada', ()=>{ state.tasks = state.tasks.filter(x=>x.id!==id); }); }
+
+/* ---- Ventana de edicion ---- */
+let dlgSave = null, dlgFields = [];
+function openDlg(title, fields, onSave){
+  dlgFields = fields; dlgSave = onSave;
+  document.getElementById('dlgTitle').textContent = title;
+  document.getElementById('dlgBody').innerHTML = fields.map(f=>{
+    const id = 'dlg-' + f.key;
+    const ctrl = f.options
+      ? `<select id="${id}">${f.options.map(o=>`<option value="${escapeHtml(o[0])}" ${o[0]===f.value?'selected':''}>${escapeHtml(o[1])}</option>`).join('')}</select>`
+      : `<input id="${id}" type="${f.type||'text'}" value="${escapeHtml(String(f.value ?? ''))}">`;
+    return `<label for="${id}">${f.label}${ctrl}</label>`;
+  }).join('');
+  document.getElementById('dlg').showModal();
+}
+function closeDlg(){ document.getElementById('dlg').close(); }
+function saveDlg(){
+  const v = {};
+  dlgFields.forEach(f=>{ v[f.key] = document.getElementById('dlg-'+f.key).value; });
+  if(dlgSave(v) === false) return;
+  closeDlg();
+}
+function editTask(id){
+  const t = state.tasks.find(x=>x.id===id); if(!t) return;
+  openDlg('Editar tarea', [
+    {key:'title', label:'Tarea', value:t.title},
+    {key:'priority', label:'Prioridad', value:t.priority, options:[['high','Alta'],['medium','Media'],['low','Baja']]},
+    {key:'date', label:'Fecha límite', type:'date', value:t.date}
+  ], v=>{
+    const title = v.title.trim();
+    if(!title){ toast('La tarea necesita un título'); return false; }
+    Object.assign(t, {title, priority:v.priority, date:v.date});
+    saveState(); renderAll(); toast('Tarea actualizada');
+  });
+}
+function editTxn(id){
+  const t = state.txns.find(x=>x.id===id); if(!t) return;
+  const cats = [...document.querySelectorAll('#txnCategory option')].map(o=>[o.textContent,o.textContent]);
+  if(!cats.some(c=>c[0]===t.category)) cats.push([t.category,t.category]);
+  openDlg('Editar movimiento', [
+    {key:'desc', label:'Descripción', value:t.desc},
+    {key:'amount', label:'Monto', type:'number', value:t.amount},
+    {key:'type', label:'Tipo', value:t.type, options:[['income','Ingreso'],['expense','Gasto']]},
+    {key:'category', label:'Categoría', value:t.category, options:cats},
+    {key:'date', label:'Fecha', type:'date', value:t.date}
+  ], v=>{
+    const amount = parseFloat(v.amount), desc = v.desc.trim();
+    if(!desc || isNaN(amount) || amount<=0){ toast('Revisa la descripción y el monto'); return false; }
+    Object.assign(t, {desc, amount, type:v.type, category:v.category, date:v.date || todayStr()});
+    saveState(); renderAll(); toast('Movimiento actualizado');
+  });
+}
+function editGoal(id){
+  const g = state.goals.find(x=>x.id===id); if(!g) return;
+  openDlg('Editar meta', [
+    {key:'name', label:'Nombre', value:g.name},
+    {key:'target', label:'Objetivo', type:'number', value:g.target}
+  ], v=>{
+    const name = v.name.trim(), target = parseFloat(v.target);
+    if(!name || isNaN(target) || target<=0){ toast('Revisa el nombre y el objetivo'); return false; }
+    Object.assign(g, {name, target, current:Math.min(g.current, target)});
+    saveState(); renderAll(); toast('Meta actualizada');
+  });
+}
+
+/* ---------------- Transactions ---------------- */
+function addTxn(){
+  const descEl = document.getElementById('txnDesc');
+  const desc = descEl.value.trim();
+  const amount = parseFloat(document.getElementById('txnAmount').value);
+  if(!desc || isNaN(amount) || amount<=0) return;
+  const type = document.getElementById('txnType').value;
+  const category = document.getElementById('txnCategory').value;
+  const date = document.getElementById('txnDate').value || todayStr();
+  state.txns.unshift({ id: uid(), desc, amount, type, category, date });
+  descEl.value = '';
+  document.getElementById('txnAmount').value = '';
+  saveState(); renderAll();
+  if(type==='expense') checkBudgetAlert(date);
+}
+function deleteTxn(id){ withUndo('Movimiento eliminado', ()=>{ state.txns = state.txns.filter(x=>x.id!==id); }); }
+
+/* ---------------- Budget ---------------- */
+function monthSpent(month){
+  return state.txns.filter(t=>t.type==='expense' && t.category!=='Ahorro' && (t.date||'').startsWith(month)).reduce((a,t)=>a+t.amount,0);
+}
+function setBudget(){
+  const v = parseFloat(document.getElementById('budgetInput').value);
+  state.budget = (isNaN(v) || v<0) ? 0 : v;
+  saveState(); renderAll();
+  toast(state.budget ? 'Presupuesto guardado' : 'Presupuesto quitado');
+}
+function checkBudgetAlert(date){
+  const month = todayStr().slice(0,7);
+  if(!state.budget || !(date||'').startsWith(month)) return;
+  const pct = monthSpent(month) / state.budget * 100;
+  if(pct > 100) toast('⚠ Superaste tu presupuesto de este mes');
+  else if(pct >= 80) toast('Ya usaste el ' + Math.round(pct) + '% de tu presupuesto');
+}
+function renderBudget(){
+  const month = todayStr().slice(0,7);
+  document.getElementById('budgetMonth').textContent = month;
+  const fill = document.getElementById('budgetFill');
+  const text = document.getElementById('budgetText');
+  if(!state.budget){
+    fill.style.width = '0%'; fill.className = 'budget-fill';
+    text.textContent = 'Define un límite para recibir alertas.';
+    return;
+  }
+  const spent = monthSpent(month);
+  const pct = spent / state.budget * 100;
+  fill.style.width = Math.min(100, pct) + '%';
+  fill.className = 'budget-fill' + (pct>100?' over':pct>=80?' warn':'');
+  const left = state.budget - spent;
+  text.innerHTML = '<strong>' + fmt(spent) + '</strong> de ' + fmt(state.budget) + ' (' + Math.round(pct) + '%) · ' +
+    (left>=0 ? 'te quedan ' + fmt(left) : 'te pasaste por ' + fmt(-left));
+}
+
+/* ---------------- Category chart ---------------- */
+function renderChart(){
+  const box = document.getElementById('catChart');
+  const totals = {};
+  filteredTxns().filter(t=>t.type==='expense').forEach(t=>{ totals[t.category] = (totals[t.category]||0) + t.amount; });
+  const rows = Object.entries(totals).sort((a,b)=>b[1]-a[1]);
+  if(!rows.length){ box.innerHTML = '<div class="empty-state">Sin gastos para mostrar.</div>'; return; }
+  const total = rows.reduce((a,r)=>a+r[1],0);
+  box.innerHTML = rows.map(([cat,val])=>{
+    const pct = Math.round(val/total*100);
+    return `<div class="cat-row">
+      <div class="cat-top"><span>${escapeHtml(cat)}</span><span>${fmt(val)} · ${pct}%</span></div>
+      <div class="cat-track"><div class="cat-fill" style="width:${pct}%"></div></div>
+    </div>`;
+  }).join('');
+}
+
+/* ---------------- Export / Import ---------------- */
+function download(name, content, type){
+  const blob = new Blob([content], {type});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = name;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
+}
+function csvCell(v){
+  let t = String(v ?? '');
+  if(/^[=+\-@]/.test(t)) t = "'" + t;
+  return '"' + t.replace(/"/g,'""') + '"';
+}
+function exportCSV(){
+  const rows = [['Fecha','Tipo','Categoría','Descripción','Monto']];
+  state.txns.forEach(t=>rows.push([t.date||'', t.type==='income'?'Ingreso':'Gasto', t.category, t.desc, t.amount]));
+  const csv = '\ufeff' + rows.map(r=>r.map(csvCell).join(',')).join('\n');
+  download('balance-movimientos.csv', csv, 'text/csv;charset=utf-8');
+  toast('CSV exportado');
+}
+function exportJSON(){
+  download('balance-copia-' + todayStr() + '.json', JSON.stringify(state, null, 2), 'application/json');
+  toast('Copia de seguridad descargada');
+}
+function importJSON(ev){
+  const file = ev.target.files[0];
+  ev.target.value = '';
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try{
+      const d = JSON.parse(reader.result);
+      if(!d || !Array.isArray(d.tasks) || !Array.isArray(d.txns) || !Array.isArray(d.goals)) throw new Error('formato');
+      if(!confirm('Esto reemplazará tus datos actuales por los del archivo. ¿Continuar?')) return;
+      state = {
+        tasks: d.tasks.map(t=>({ id:Number(t.id)||uid(), title:String(t.title||''), priority:['high','medium','low'].includes(t.priority)?t.priority:'medium', date:/^\d{4}-\d{2}-\d{2}$/.test(t.date||'')?t.date:'', done:!!t.done })),
+        txns: d.txns.map(t=>({ id:Number(t.id)||uid(), desc:String(t.desc||''), amount:Math.abs(Number(t.amount))||0, type:t.type==='income'?'income':'expense', category:String(t.category||'General'), date:/^\d{4}-\d{2}-\d{2}$/.test(t.date||'')?t.date:'' })),
+        goals: d.goals.map(g=>({ id:Number(g.id)||uid(), name:String(g.name||''), target:Math.abs(Number(g.target))||0, current:Math.abs(Number(g.current))||0 })),
+        budget: Math.abs(Number(d.budget))||0
+      };
+      saveState(); showDash(); toast('Datos importados');
+    }catch(e){ toast('El archivo no es una copia válida de Balance'); }
+  };
+  reader.readAsText(file);
+}
+
+/* ---------------- Goals ---------------- */
+function addGoal(){
+  const nameEl = document.getElementById('goalName');
+  const name = nameEl.value.trim();
+  const target = parseFloat(document.getElementById('goalTarget').value);
+  if(!name || isNaN(target) || target<=0) return;
+  state.goals.unshift({ id: uid(), name, target, current:0 });
+  nameEl.value = '';
+  document.getElementById('goalTarget').value = '';
+  saveState(); renderAll();
+}
+function addToGoal(id){
+  const el = document.getElementById('goalAdd-'+id);
+  const amt = parseFloat(el.value);
+  if(isNaN(amt) || amt<=0) return;
+  const g = state.goals.find(x=>x.id===id);
+  if(g){
+    const add = Math.min(amt, g.target - g.current);
+    if(add <= 0){ toast('Esta meta ya está completa'); return; }
+    g.current += add;
+    state.txns.unshift({ id: uid(), desc:'Aporte a meta: ' + g.name, amount:add, type:'expense', category:'Ahorro', date:todayStr() });
+    el.value=''; saveState(); renderAll();
+    toast('Aporte registrado como movimiento en «Ahorro»');
+  }
+}
+function deleteGoal(id){ withUndo('Meta eliminada', ()=>{ state.goals = state.goals.filter(x=>x.id!==id); }); }
+
+/* ---------------- Render ---------------- */
+function fmt(n){
+  return '$' + Number(n).toLocaleString('es-CO', {maximumFractionDigits:0});
+}
+
+function renderAll(){
+  renderSummary();
+  renderTasks();
+  renderTxns();
+  renderGoals();
+  renderBudget();
+  renderChart();
+  renderEquilibrium();
+  renderMonthly();
+}
+
+function renderSummary(){
+  const sm = document.getElementById('sumMonth').value;
+  const tx = sm ? state.txns.filter(t=>(t.date||'').startsWith(sm)) : state.txns;
+  const income = tx.filter(t=>t.type==='income').reduce((a,t)=>a+t.amount,0);
+  const expense = tx.filter(t=>t.type==='expense').reduce((a,t)=>a+t.amount,0);
+  const balance = income - expense;
+  const balEl = document.getElementById('sumBalance');
+  balEl.textContent = fmt(balance);
+  balEl.className = 'value ' + (balance<0?'negative':balance>0?'positive':'');
+  document.getElementById('sumBalanceSub').textContent = fmt(income) + ' ingresos · ' + fmt(expense) + ' gastos' + (sm ? ' (' + sm + ')' : '');
+
+  const pending = state.tasks.filter(t=>!t.done).length;
+  document.getElementById('sumTasks').textContent = pending;
+  document.getElementById('sumTasksSub').textContent = state.tasks.length ? (state.tasks.length - pending) + ' completadas de ' + state.tasks.length : 'Aún no has creado tareas';
+
+  const avgProgress = state.goals.length
+    ? Math.round(state.goals.reduce((a,g)=> a + (g.target>0 ? g.current/g.target : 0), 0) / state.goals.length * 100)
+    : 0;
+  document.getElementById('sumGoals').textContent = avgProgress + '%';
+  document.getElementById('sumGoalsSub').textContent = state.goals.length + ' meta(s) activa(s)';
+}
+
+const PRIO = { high:0, medium:1, low:2 };
+const PRIO_LABEL = { high:'Alta', medium:'Media', low:'Baja' };
+
+function renderTasks(){
+  const list = document.getElementById('taskList');
+  const pending = state.tasks.filter(t=>!t.done).length;
+  document.getElementById('taskCount').textContent = pending + ' pendientes';
+  if(state.tasks.length===0){
+    list.innerHTML = '<div class="empty-state">Todavía no tienes tareas. Añade la primera arriba.</div>';
+    return;
+  }
+  const f = document.getElementById('taskFilter').value;
+  const sort = document.getElementById('taskSort').value;
+  let items = state.tasks.filter(t => f==='all' || (f==='pending' ? !t.done : t.done));
+  if(sort==='priority') items = items.slice().sort((a,b)=>PRIO[a.priority]-PRIO[b.priority]);
+  else if(sort==='date') items = items.slice().sort((a,b)=>(a.date||'9999').localeCompare(b.date||'9999'));
+  if(!items.length){
+    list.innerHTML = '<div class="empty-state">No hay tareas con este filtro.</div>';
+    return;
+  }
+  const today = todayStr();
+  list.innerHTML = items.map(t => {
+    const overdue = !t.done && t.date && t.date < today;
+    return `
+    <li class="task-item ${t.done?'done':''}">
+      <input type="checkbox" ${t.done?'checked':''} onchange="toggleTask(${t.id})">
+      <div class="t-body">
+        <div class="t-title">${escapeHtml(t.title)}</div>
+        <div class="t-meta">
+          <span class="pill ${t.priority}">${PRIO_LABEL[t.priority]||'Media'}</span>
+          ${overdue ? '<span class="pill overdue">Vencida</span>' : ''}
+          ${t.date ? `<span class="t-date">${escapeHtml(t.date)}</span>` : ''}
+        </div>
+      </div>
+      <button class="edit-btn" title="Editar" aria-label="Editar tarea" onclick="editTask(${t.id})">✎</button>
+      <button class="del-btn" aria-label="Eliminar tarea" onclick="deleteTask(${t.id})">✕</button>
+    </li>`;
+  }).join('');
+}
+
+function filteredTxns(){
+  const q = document.getElementById('txnSearch').value.trim().toLowerCase();
+  const type = document.getElementById('txnFilterType').value;
+  const cat = document.getElementById('txnFilterCat').value;
+  const month = document.getElementById('txnFilterMonth').value;
+  return state.txns.filter(t =>
+    (type==='all' || t.type===type) &&
+    (cat==='all' || t.category===cat) &&
+    (!month || (t.date||'').startsWith(month)) &&
+    (!q || t.desc.toLowerCase().includes(q))
+  );
+}
+
+function renderTxns(){
+  const list = document.getElementById('txnList');
+  const items = filteredTxns();
+  document.getElementById('txnCount').textContent =
+    (items.length===state.txns.length ? state.txns.length : items.length + ' de ' + state.txns.length) + ' movimientos';
+  if(state.txns.length===0){
+    list.innerHTML = '<div class="empty-state">Aún no has registrado ingresos ni gastos.</div>';
+  } else if(items.length===0){
+    list.innerHTML = '<div class="empty-state">Ningún movimiento coincide con los filtros.</div>';
+  } else {
+    list.innerHTML = items.map(t => `
+    <li class="txn-item">
+      <div class="txn-left">
+        <div class="txn-desc">${escapeHtml(t.desc)}</div>
+        <div class="txn-cat">${escapeHtml(t.category)}${t.date ? ' · ' + escapeHtml(t.date) : ''}</div>
+      </div>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <div class="txn-amt ${t.type}">${t.type==='income'?'+':'-'}${fmt(t.amount)}</div>
+        <button class="edit-btn" title="Editar" aria-label="Editar movimiento" onclick="editTxn(${t.id})">✎</button>
+        <button class="del-btn" aria-label="Eliminar movimiento" onclick="deleteTxn(${t.id})">✕</button>
+      </div>
+    </li>`).join('');
+  }
+}
+
+function renderGoals(){
+  const list = document.getElementById('goalList');
+  document.getElementById('goalCount').textContent = state.goals.length + ' metas';
+  if(state.goals.length===0){
+    list.innerHTML = '<div class="empty-state">Crea tu primera meta de ahorro arriba.</div>';
+    return;
+  }
+  list.innerHTML = state.goals.map(g => {
+    const pct = g.target>0 ? Math.min(100, Math.round(g.current/g.target*100)) : 0;
+    return `
+    <div class="goal-item">
+      <div class="goal-top">
+        <span>${escapeHtml(g.name)}</span>
+        <span>${pct>=100 ? '✓ Lograda' : pct+'%'}</span>
+      </div>
+      <div class="goal-bar-track"><div class="goal-bar-fill" style="width:${pct}%"></div></div>
+      <div class="goal-nums">
+        <span>${fmt(g.current)} de ${fmt(g.target)}</span>
+        <span><button class="edit-btn" title="Editar" aria-label="Editar meta" onclick="editGoal(${g.id})">✎</button><button class="del-btn" aria-label="Eliminar meta" onclick="deleteGoal(${g.id})" style="font-size:0.85rem;">✕</button></span>
+      </div>
+      <div class="goal-add">
+        <input type="number" id="goalAdd-${g.id}" placeholder="Añadir $" aria-label="Monto a aportar">
+        <button onclick="addToGoal(${g.id})">Aportar</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function escapeHtml(str){
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML.replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+function renderEquilibrium(){
+  const month = todayStr().slice(0,7);
+  const total = state.tasks.length, done = state.tasks.filter(t=>t.done).length;
+  const inc = state.txns.filter(t=>t.type==='income').reduce((a,t)=>a+t.amount,0);
+  const exp = state.txns.filter(t=>t.type==='expense').reduce((a,t)=>a+t.amount,0);
+  const hasData = total || state.txns.length || state.budget;
+  const taskScore = total ? done/total*100 : 50;
+  let money = 50;
+  if(state.budget) money = Math.max(0, 100 - monthSpent(month)/state.budget*100);
+  else if(inc) money = Math.max(0, Math.min(100, (inc-exp)/inc*100));
+  const diff = hasData ? taskScore - money : 0;
+  const tilt = Math.max(-14, Math.min(14, diff/50*14));
+  document.getElementById('eqBeam').setAttribute('transform', `rotate(${tilt} 160 60)`);
+  document.getElementById('eqL').setAttribute('transform', `rotate(${-tilt} 70 60)`);
+  document.getElementById('eqR').setAttribute('transform', `rotate(${-tilt} 250 60)`);
+  document.getElementById('eqText').textContent = !hasData ? 'Agrega tareas y movimientos para ver cómo va tu equilibrio.'
+    : Math.abs(diff) < 15 ? 'Tareas y finanzas van parejas. Buen equilibrio.'
+    : diff > 0 ? 'Vas fuerte con tus tareas, pero tus finanzas necesitan atención.'
+    : 'Tus finanzas están cuidadas, pero las tareas se están quedando atrás.';
+}
+function renderMonthly(){
+  const box = document.getElementById('monthChart');
+  if(!state.txns.length){ box.innerHTML = '<div class="empty-state">Aún no hay movimientos para comparar.</div>'; return; }
+  const now = new Date(), data = [];
+  for(let i=5;i>=0;i--){
+    const d = new Date(now.getFullYear(), now.getMonth()-i, 1);
+    const m = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0');
+    const sum = type => state.txns.filter(t=>t.type===type && (t.date||'').startsWith(m)).reduce((a,t)=>a+t.amount,0);
+    data.push({m, inc:sum('income'), exp:sum('expense')});
+  }
+  const max = Math.max(1, ...data.flatMap(d=>[d.inc,d.exp]));
+  box.innerHTML = data.map(d=>`<div class="mrow"><span>${d.m.slice(5)}/${d.m.slice(2,4)}</span><div class="mbars"><div class="i" style="width:${d.inc/max*100}%" title="Ingresos ${fmt(d.inc)}"></div><div class="e" style="width:${d.exp/max*100}%" title="Gastos ${fmt(d.exp)}"></div></div></div>`).join('')
+    + '<div class="budget-text">Verde: ingresos · Rojo: gastos (pasa el cursor para ver el monto)</div>';
+}
+
+/* init */
+(function(){
+  const labels = {taskInput:'Nueva tarea',taskPriority:'Prioridad',taskDate:'Fecha límite',taskFilter:'Filtrar tareas',taskSort:'Ordenar tareas',txnDesc:'Descripción del movimiento',txnAmount:'Monto',txnDate:'Fecha del movimiento',txnType:'Tipo de movimiento',txnCategory:'Categoría',txnSearch:'Buscar movimientos',txnFilterType:'Filtrar por tipo',txnFilterCat:'Filtrar por categoría',txnFilterMonth:'Filtrar por mes',budgetInput:'Límite de gastos del mes',goalName:'Nombre de la meta',goalTarget:'Objetivo en pesos',nameInput:'Tu nombre',emailInput:'Correo electrónico',passInput:'Contraseña'};
+  Object.entries(labels).forEach(([id,l])=>{ const el=document.getElementById(id); if(el) el.setAttribute('aria-label',l); });
+  const enter = (id,fn)=>document.getElementById(id).addEventListener('keydown', e=>{ if(e.key==='Enter') fn(); });
+  enter('passInput',signIn); enter('taskInput',addTask); enter('txnDesc',addTxn); enter('txnAmount',addTxn); enter('goalName',addGoal); enter('goalTarget',addGoal);
+  document.querySelectorAll('.navlinks a').forEach(a=>a.addEventListener('click',()=>document.querySelector('.navlinks').classList.remove('open')));
+})();
+(function(){
+  const sel = document.getElementById('txnFilterCat');
+  document.querySelectorAll('#txnCategory option').forEach(o=>{
+    const opt = document.createElement('option'); opt.value = o.textContent; opt.textContent = o.textContent; sel.appendChild(opt);
+  });
+})();
+document.getElementById('balanceSlider').addEventListener('input', e => updateScale(e.target.value));
+if(location.hash === '#app') showApp();
+</script>
+</body>
+</html>

@@ -785,6 +785,15 @@
           <div id="monthChart"></div>
         </div>
 
+        <div class="panel" id="gcalPanel">
+          <h3>Google Calendar <span class="count" id="gcalBadge">…</span></h3>
+          <p class="budget-text" id="gcalText">Consultando conexión…</p>
+          <div class="add-row">
+            <button id="gcalConnect" onclick="gcalConnect()">Conectar Google Calendar</button>
+            <button id="gcalDisconnect" class="mini-btn" onclick="gcalDisconnect()" style="display:none;">Desconectar</button>
+          </div>
+        </div>
+
         <div class="panel">
           <h3>Presupuesto mensual <span class="count" id="budgetMonth"></span></h3>
           <div class="add-row">
@@ -1026,6 +1035,7 @@ function showDash(){
   document.getElementById('txnDate').value = todayStr();
   document.getElementById('budgetInput').value = state.budget || '';
   renderAll();
+  gcalRefresh(); handleGcalReturn();
 }
 
 async function logout(){
@@ -1451,6 +1461,46 @@ function renderMonthly(){
   const max = Math.max(1, ...data.flatMap(d=>[d.inc,d.exp]));
   box.innerHTML = data.map(d=>`<div class="mrow"><span>${d.m.slice(5)}/${d.m.slice(2,4)}</span><div class="mbars"><div class="i" style="width:${d.inc/max*100}%" title="Ingresos ${fmt(d.inc)}"></div><div class="e" style="width:${d.exp/max*100}%" title="Gastos ${fmt(d.exp)}"></div></div></div>`).join('')
     + '<div class="budget-text">Verde: ingresos · Rojo: gastos (pasa el cursor para ver el monto)</div>';
+}
+
+/* ---------------- Google Calendar (etapa 1: conexion) ---------------- */
+const GCAL_FN = SUPABASE_URL + '/functions/v1/google-calendar';
+async function gcalCall(route){
+  const { data:{ session } } = await db.auth.getSession();
+  if(!session) throw new Error('Sin sesión');
+  const r = await fetch(GCAL_FN + '/' + route, { method:'POST', headers:{ 'Content-Type':'application/json', 'Authorization':'Bearer ' + session.access_token, 'apikey':SUPABASE_PUBLISHABLE_KEY }, body:'{}' });
+  const j = await r.json().catch(()=>({}));
+  if(!r.ok) throw new Error(j.error || ('Error ' + r.status));
+  return j;
+}
+function renderGcal(st){
+  const on = !!(st && st.connected);
+  document.getElementById('gcalBadge').textContent = on ? 'Conectado' : st ? 'No conectado' : 'Sin datos';
+  document.getElementById('gcalText').textContent = on
+    ? 'Cuenta conectada: ' + (st.google_email || 'cuenta de Google') + (st.connected_at ? ' · desde ' + new Date(st.connected_at).toLocaleDateString('es-CO') : '')
+    : st ? 'Conecta tu cuenta de Google para llevar tus citas en Balance.' : 'No se pudo consultar el estado. Revisa que la función esté desplegada.';
+  document.getElementById('gcalConnect').style.display = on ? 'none' : '';
+  document.getElementById('gcalDisconnect').style.display = on ? '' : 'none';
+}
+async function gcalRefresh(){
+  if(!db) return;
+  try{ renderGcal(await gcalCall('status')); }catch(e){ console.error(e); renderGcal(null); }
+}
+async function gcalConnect(){
+  try{ const { url } = await gcalCall('start'); location.href = url; }
+  catch(e){ toast('No se pudo iniciar la conexión: ' + e.message); }
+}
+async function gcalDisconnect(){
+  if(!confirm('¿Desconectar Google Calendar? Se revocará el acceso de Balance a tu cuenta de Google.')) return;
+  try{ await gcalCall('disconnect'); toast('Google Calendar desconectado'); }
+  catch(e){ toast('No se pudo desconectar: ' + e.message); }
+  gcalRefresh();
+}
+function handleGcalReturn(){
+  const r = new URLSearchParams(location.search).get('gcal'); if(!r) return;
+  const msg = { connected:'Google Calendar conectado', denied:'No autorizaste el acceso a Google Calendar', invalid_state:'La solicitud expiró. Inténtalo de nuevo', no_refresh:'Google no entregó acceso continuo. Inténtalo de nuevo', missing_scope:'Falta el permiso de Calendar. Marca todas las casillas al autorizar' };
+  toast(msg[r] || 'No se pudo conectar Google Calendar. Inténtalo de nuevo');
+  history.replaceState(null, '', location.pathname + '#app');
 }
 
 /* init */

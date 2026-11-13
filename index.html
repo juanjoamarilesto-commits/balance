@@ -414,6 +414,36 @@
     html{scroll-behavior:auto;}
     *{transition:none !important; animation:none !important;}
   }
+
+  /* ---- Calendario ---- */
+  .cal-head{display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-top:14px;}
+  .cal-head .grow{flex:1;}
+  .cal-title{font-family:'Space Grotesk'; font-weight:600; color:var(--navy); text-transform:capitalize; min-width:140px; text-align:center;}
+  .seg{display:inline-flex; border:1px solid var(--border); border-radius:8px; overflow:hidden;}
+  .seg button{background:#fff; color:var(--navy-2); padding:6px 12px; font-size:.78rem; font-weight:600;}
+  .seg button.on{background:var(--navy); color:#fff;}
+  .cal-primary{background:var(--navy); color:#fff; padding:7px 14px; border-radius:8px; font-size:.8rem; font-weight:600;}
+  .cal-primary:hover{background:var(--navy-2);}
+  .cal-hint{margin-top:12px; padding:10px 12px; border-radius:8px; background:var(--cream); border:1px solid var(--border); font-size:.8rem; color:var(--navy-2);}
+  .cal-hint button{background:none; color:var(--orange-dark); font-weight:700; text-decoration:underline; font-size:.8rem; margin-left:6px;}
+  .cal-grid{display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:10px; overflow:hidden; margin-top:14px;}
+  .cal-dow{background:var(--cream); font-size:.72rem; font-weight:600; color:var(--gray); text-align:center; padding:6px 0;}
+  .cal-cell{background:#fff; min-height:78px; padding:4px 5px; cursor:pointer; overflow:hidden;}
+  .cal-cell.out{background:var(--cream);}
+  .cal-cell.out .cal-num{color:var(--gray-light);}
+  .cal-cell.sel{outline:2px solid var(--navy); outline-offset:-2px;}
+  .cal-num{display:inline-block; font-size:.76rem; font-weight:600; color:var(--navy); min-width:20px; height:20px; line-height:20px; text-align:center; border-radius:50%;}
+  .cal-cell.today .cal-num{background:var(--orange); color:#fff;}
+  .cal-chip{display:block; font-size:.68rem; padding:1px 4px; border-radius:4px; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; background:#FDEBD8; color:var(--orange-dark);}
+  .cal-chip.g{background:#E3ECF5; color:var(--navy-2);}
+  .cal-more{font-size:.66rem; color:var(--gray-light); margin-top:2px;}
+  .cal-day-h{display:flex; justify-content:space-between; align-items:center; gap:8px; margin-top:20px; font-family:'Space Grotesk'; font-weight:600; color:var(--navy); font-size:.95rem; text-transform:capitalize;}
+  .cal-group{font-size:.76rem; font-weight:600; color:var(--gray); margin-top:16px; text-transform:capitalize;}
+  @media (max-width:640px){
+    .cal-cell{min-height:50px; padding:3px;}
+    .cal-chip{font-size:0; height:6px; width:6px; padding:0; display:inline-block; border-radius:50%; margin:2px 2px 0 0;}
+    .cal-more{display:none;}
+  }
 </style>
 </head>
 <body>
@@ -704,6 +734,32 @@
       </div>
     </div>
 
+    <div class="panel" id="calPanel">
+      <h3>Calendario <span class="count" id="apptCount">0 próximas</span></h3>
+      <div class="cal-head">
+        <div class="seg" role="group" aria-label="Vista del calendario">
+          <button id="calViewMonth" class="on" onclick="calSetView('month')">Mes</button>
+          <button id="calViewList" onclick="calSetView('list')">Lista</button>
+        </div>
+        <span class="grow"></span>
+        <button class="mini-btn" onclick="calSyncClick()">Sincronizar</button>
+        <button class="cal-primary" onclick="openNewAppt()">+ Nuevo evento</button>
+      </div>
+      <div class="cal-hint" id="calHint" style="display:none;">Conecta Google Calendar para que tus eventos se sincronicen en ambos sentidos.<button onclick="document.getElementById('gcalPanel').scrollIntoView({behavior:'smooth',block:'center'})">Ir a la conexión</button></div>
+      <div id="calMonthWrap">
+        <div class="cal-head" style="justify-content:center;">
+          <button class="mini-btn" onclick="calNav(-1)" aria-label="Mes anterior">‹</button>
+          <span class="cal-title" id="calTitle"></span>
+          <button class="mini-btn" onclick="calNav(1)" aria-label="Mes siguiente">›</button>
+          <button class="mini-btn" onclick="calToday()">Hoy</button>
+        </div>
+        <div class="cal-grid" id="calGrid"></div>
+        <div class="cal-day-h"><span id="calDayLabel"></span><button class="mini-btn" id="calDayAdd" onclick="openNewAppt()" style="text-transform:none;">+ Añadir</button></div>
+        <ul class="txn-list" id="calDayList"></ul>
+      </div>
+      <div id="calListWrap" style="display:none;"></div>
+    </div>
+
     <div class="panel-grid">
       <div>
         <div class="panel">
@@ -787,9 +843,11 @@
 
         <div class="panel" id="gcalPanel">
           <h3>Google Calendar <span class="count" id="gcalBadge">…</span></h3>
+          <p class="budget-text" id="gcalSync" style="margin-bottom:8px;"></p>
           <p class="budget-text" id="gcalText">Consultando conexión…</p>
           <div class="add-row">
             <button id="gcalConnect" onclick="gcalConnect()">Conectar Google Calendar</button>
+            <button id="gcalSyncBtn" onclick="gcalSync(true)" style="display:none;">Sincronizar ahora</button>
             <button id="gcalDisconnect" class="mini-btn" onclick="gcalDisconnect()" style="display:none;">Desconectar</button>
           </div>
         </div>
@@ -1035,7 +1093,7 @@ function showDash(){
   document.getElementById('txnDate').value = todayStr();
   document.getElementById('budgetInput').value = state.budget || '';
   renderAll();
-  gcalRefresh(); handleGcalReturn();
+  gcalInit(); handleGcalReturn();
 }
 
 async function logout(){
@@ -1464,6 +1522,7 @@ function renderMonthly(){
 }
 
 /* ---------------- Google Calendar (etapa 1: conexion) ---------------- */
+let gcalConnected = false, gcalSyncing = false, syncSoon = null, syncTimer = null, appts = [];
 const GCAL_FN = SUPABASE_URL + '/functions/v1/google-calendar';
 async function gcalCall(route){
   const { data:{ session } } = await db.auth.getSession();
@@ -1481,6 +1540,10 @@ function renderGcal(st){
     : st ? 'Conecta tu cuenta de Google para llevar tus citas en Balance.' : 'No se pudo consultar el estado. Revisa que la función esté desplegada.';
   document.getElementById('gcalConnect').style.display = on ? 'none' : '';
   document.getElementById('gcalDisconnect').style.display = on ? '' : 'none';
+  gcalConnected = on;
+  document.getElementById('gcalSyncBtn').style.display = on ? '' : 'none';
+  document.getElementById('gcalSync').textContent = !on ? '' : st.sync_error ? '⚠ ' + st.sync_error
+    : st.last_synced_at ? 'Última sincronización: ' + new Date(st.last_synced_at).toLocaleString('es-CO') : 'Aún no se ha sincronizado.';
 }
 async function gcalRefresh(){
   if(!db) return;
@@ -1502,6 +1565,178 @@ function handleGcalReturn(){
   toast(msg[r] || 'No se pudo conectar Google Calendar. Inténtalo de nuevo');
   history.replaceState(null, '', location.pathname + '#app');
 }
+
+/* ---------------- Citas + sincronizacion con Google (etapa 2) ---------------- */
+const byId = id => document.getElementById(id);
+function toLocalInput(iso){
+  const d = new Date(iso), p = n => String(n).padStart(2,'0');
+  return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+'T'+p(d.getHours())+':'+p(d.getMinutes());
+}
+async function loadAppts(){
+  if(!db || !currentUserId) return;
+  const { data, error } = await db.from('appointments').select('*').is('deleted_at', null).order('start_at');
+  if(error){ console.error(error); return; }
+  appts = data; renderAppts();
+}
+function fmtAppt(a){
+  if(a.all_day) return new Date(a.start_at).toLocaleDateString('es-CO', { timeZone:'UTC', dateStyle:'medium' }) + ' · todo el día';
+  return new Date(a.start_at).toLocaleString('es-CO', { dateStyle:'medium', timeStyle:'short' }) + ' → ' + new Date(a.end_at).toLocaleTimeString('es-CO', { timeStyle:'short' });
+}
+/* ---- Calendario: vistas sobre `appts` (no duplica logica: crear/editar/borrar usan Supabase + gcalSync) ---- */
+let calView = 'month', calMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1), calSel = null;
+const pad2 = n => String(n).padStart(2,'0');
+const dkey = d => d.getFullYear()+'-'+pad2(d.getMonth()+1)+'-'+pad2(d.getDate());
+const keyDate = k => new Date(k + 'T00:00:00');   // medianoche LOCAL de esa fecha
+// Dias (YYYY-MM-DD) que ocupa una cita. All-day: fechas guardadas a las 12:00 UTC, fin exclusivo.
+function apptDays(a){
+  const out = [];
+  if(a.all_day){
+    const d = keyDate(String(a.start_at).slice(0,10)); let end = keyDate(String(a.end_at).slice(0,10));
+    if(!(end > d)){ end = new Date(d); end.setDate(end.getDate() + 1); }
+    for(let i=0; d < end && i < 62; i++){ out.push(dkey(d)); d.setDate(d.getDate() + 1); }
+  } else {
+    const s = new Date(a.start_at); let last = new Date(new Date(a.end_at).getTime() - 1); if(last < s) last = s;
+    const d = new Date(s.getFullYear(), s.getMonth(), s.getDate());
+    for(let i=0; i < 62; i++){ out.push(dkey(d)); d.setDate(d.getDate() + 1); if(d > last) break; }
+  }
+  return out;
+}
+const chipText = a => (a.all_day ? '' : new Date(a.start_at).toLocaleTimeString('es-CO', { hour:'numeric', minute:'2-digit' }) + ' ') + a.title;
+const dayLabel = k => keyDate(k).toLocaleDateString('es-CO', { weekday:'long', day:'numeric', month:'long' });
+function apptItemHtml(a){
+  return `
+    <li class="txn-item">
+      <div class="txn-left">
+        <div class="txn-desc">${escapeHtml(a.title)}</div>
+        <div class="txn-cat">${escapeHtml(fmtAppt(a))}${a.location ? ' · ' + escapeHtml(a.location) : ''}${a.origin==='google' ? ' · de Google' : ''}${a.sync_status!=='synced' ? (gcalConnected ? ' · pendiente de enviar' : ' · sin sincronizar') : ''}</div>
+      </div>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <button class="edit-btn" title="Editar" aria-label="Editar evento" onclick="editAppt('${a.id}')">✎</button>
+        <button class="del-btn" aria-label="Eliminar evento" onclick="deleteAppt('${a.id}')">✕</button>
+      </div>
+    </li>`;
+}
+function renderAppts(){
+  const today = dkey(new Date());
+  const upcoming = appts.filter(a => { const d = apptDays(a); return d[d.length-1] >= today; });
+  byId('apptCount').textContent = upcoming.length + ' próximas';
+  byId('calHint').style.display = gcalConnected ? 'none' : '';
+  byId('calViewMonth').classList.toggle('on', calView === 'month');
+  byId('calViewList').classList.toggle('on', calView === 'list');
+  byId('calMonthWrap').style.display = calView === 'month' ? '' : 'none';
+  byId('calListWrap').style.display = calView === 'list' ? '' : 'none';
+  if(calView === 'month') renderMonth(); else renderList(upcoming, today);
+}
+function renderMonth(){
+  const y = calMonth.getFullYear(), m = calMonth.getMonth(), today = dkey(new Date());
+  byId('calTitle').textContent = calMonth.toLocaleDateString('es-CO', { month:'long', year:'numeric' });
+  const byDay = {};
+  appts.forEach(a => apptDays(a).forEach(k => (byDay[k] = byDay[k] || []).push(a)));
+  if(!calSel || keyDate(calSel).getMonth() !== m || keyDate(calSel).getFullYear() !== y)
+    calSel = (new Date().getMonth() === m && new Date().getFullYear() === y) ? today : dkey(new Date(y, m, 1));
+  const offset = (new Date(y, m, 1).getDay() + 6) % 7, weeks = Math.ceil((offset + new Date(y, m + 1, 0).getDate()) / 7);
+  let html = ['L','M','X','J','V','S','D'].map(d => `<div class="cal-dow">${d}</div>`).join('');
+  for(let i=0; i < weeks * 7; i++){
+    const d = new Date(y, m, 1 - offset + i), k = dkey(d), list = byDay[k] || [];
+    html += `<div class="cal-cell${d.getMonth() !== m ? ' out' : ''}${k === today ? ' today' : ''}${k === calSel ? ' sel' : ''}" role="button" tabindex="0" aria-label="${escapeHtml(dayLabel(k))}${list.length ? ', ' + list.length + ' evento(s)' : ''}" onclick="calPick('${k}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();calPick('${k}')}">`
+      + `<span class="cal-num">${d.getDate()}</span>`
+      + list.slice(0,2).map(a => `<span class="cal-chip${a.origin==='google' ? ' g' : ''}">${escapeHtml(chipText(a))}</span>`).join('')
+      + (list.length > 2 ? `<div class="cal-more">+${list.length - 2} más</div>` : '') + `</div>`;
+  }
+  byId('calGrid').innerHTML = html;
+  byId('calDayLabel').textContent = dayLabel(calSel);
+  const dayItems = byDay[calSel] || [];
+  byId('calDayList').innerHTML = dayItems.length ? dayItems.map(apptItemHtml).join('') : '<div class="empty-state">Sin eventos este día.</div>';
+}
+function renderList(items, today){
+  const groups = {};
+  items.slice(0, 200).forEach(a => { let k = apptDays(a)[0]; if(k < today) k = today; (groups[k] = groups[k] || []).push(a); });
+  const keys = Object.keys(groups).sort();
+  byId('calListWrap').innerHTML = keys.length
+    ? keys.map(k => `<div class="cal-group">${escapeHtml(dayLabel(k))}</div><ul class="txn-list">${groups[k].map(apptItemHtml).join('')}</ul>`).join('')
+    : '<div class="empty-state">No tienes eventos próximos. Crea el primero con “+ Nuevo evento”.</div>';
+}
+function calSetView(v){ calView = v; renderAppts(); }
+function calNav(n){ calMonth = new Date(calMonth.getFullYear(), calMonth.getMonth() + n, 1); renderAppts(); }
+function calToday(){ const n = new Date(); calMonth = new Date(n.getFullYear(), n.getMonth(), 1); calSel = dkey(n); renderAppts(); }
+function calPick(k){ calSel = k; const d = keyDate(k); calMonth = new Date(d.getFullYear(), d.getMonth(), 1); renderAppts(); }
+function calSyncClick(){
+  if(!gcalConnected){ toast('Primero conecta Google Calendar'); byId('gcalPanel').scrollIntoView({ behavior:'smooth', block:'center' }); return; }
+  gcalSync(true);
+}
+function openNewAppt(k){
+  const day = k || calSel || dkey(new Date());
+  openDlg('Nuevo evento', [
+    { key:'title', label:'Título', value:'' },
+    { key:'location', label:'Lugar (opcional)', value:'' },
+    { key:'allday', label:'¿Todo el día?', value:'no', options:[['no','No'],['si','Sí']] },
+    { key:'start', label:'Inicio', type:'datetime-local', value:day + 'T09:00' },
+    { key:'end', label:'Fin (opcional)', type:'datetime-local', value:day + 'T10:00' }
+  ], v => {
+    const title = v.title.trim(); if(!title){ toast('El evento necesita un título'); return false; }
+    if(!v.start){ toast('Indica la fecha de inicio'); return false; }
+    let start_at, end_at; const allDay = v.allday === 'si';
+    if(allDay){
+      const sd = v.start.slice(0,10), ed = (v.end || v.start).slice(0,10);
+      if(ed < sd){ toast('El fin no puede ser anterior al inicio'); return false; }
+      const e = new Date(ed + 'T12:00:00Z'); e.setUTCDate(e.getUTCDate() + 1);   // fin exclusivo (como Google)
+      start_at = sd + 'T12:00:00.000Z'; end_at = e.toISOString();
+    } else {
+      const s = new Date(v.start), e = v.end ? new Date(v.end) : new Date(s.getTime() + 36e5);
+      if(isNaN(s) || isNaN(e) || !(e > s)){ toast('Revisa las fechas: el fin debe ser posterior al inicio'); return false; }
+      start_at = s.toISOString(); end_at = e.toISOString();
+    }
+    db.from('appointments').insert({ user_id:currentUserId, title, location:v.location.trim() || null, start_at, end_at, all_day:allDay,
+      timezone:Intl.DateTimeFormat().resolvedOptions().timeZone || 'America/Bogota', origin:'balance', sync_status:'pending' })
+      .then(({ error }) => { if(error){ console.error(error); toast('No se pudo guardar el evento'); return; } toast('Evento creado'); loadAppts(); scheduleSync(); });
+  });
+}
+function editAppt(id){
+  const a = appts.find(x => x.id === id); if(!a) return;
+  const type = a.all_day ? 'date' : 'datetime-local', val = d => a.all_day ? d.slice(0,10) : toLocalInput(d);
+  openDlg('Editar cita', [
+    { key:'title', label:'Título', value:a.title },
+    { key:'location', label:'Lugar', value:a.location || '' },
+    { key:'start', label:a.all_day ? 'Fecha de inicio' : 'Inicio', type, value:val(a.start_at) },
+    { key:'end', label:a.all_day ? 'Fecha de fin (día siguiente al último)' : 'Fin', type, value:val(a.end_at) }
+  ], v => {
+    const title = v.title.trim(); if(!title){ toast('La cita necesita un título'); return false; }
+    const s = new Date(a.all_day ? v.start + 'T12:00:00Z' : v.start), e = new Date(a.all_day ? v.end + 'T12:00:00Z' : v.end);
+    if(isNaN(s) || isNaN(e) || !(e > s)){ toast('Revisa las fechas: el fin debe ser posterior al inicio'); return false; }
+    db.from('appointments').update({ title, location:v.location.trim() || null, start_at:s.toISOString(), end_at:e.toISOString(), sync_status:'pending', updated_at:new Date().toISOString() }).eq('id', id)
+      .then(({ error }) => { if(error){ console.error(error); toast('No se pudo guardar'); return; } toast('Cita actualizada'); loadAppts(); scheduleSync(); });
+  });
+}
+async function deleteAppt(id){
+  const now = () => new Date().toISOString();
+  const { error } = await db.from('appointments').update({ deleted_at:now(), sync_status:'pending', updated_at:now() }).eq('id', id);
+  if(error){ console.error(error); toast('No se pudo eliminar'); return; }
+  await loadAppts();
+  toast('Cita eliminada', async () => { await db.from('appointments').update({ deleted_at:null, sync_status:'pending', updated_at:now() }).eq('id', id); loadAppts(); scheduleSync(); });
+  scheduleSync(7000);   // espera a que termine la ventana de "Deshacer"
+}
+function scheduleSync(ms){ clearTimeout(syncSoon); syncSoon = setTimeout(() => gcalSync(false), ms || 1200); }
+async function gcalSync(manual){
+  if(!gcalConnected || gcalSyncing) return;
+  gcalSyncing = true;
+  const btn = byId('gcalSyncBtn'); btn.disabled = true; btn.textContent = 'Sincronizando…';
+  try{
+    const r = await gcalCall('sync');
+    if(manual) toast(r.errors ? 'Sincronizado, con ' + r.errors + ' cita(s) con error' : 'Sincronización completa');
+  }catch(e){
+    console.error(e);
+    toast(e.message === 'reconnect' ? 'Vuelve a conectar Google Calendar' : 'No se pudo sincronizar. Se reintentará.');
+  }
+  gcalSyncing = false; btn.disabled = false; btn.textContent = 'Sincronizar ahora';
+  await Promise.all([loadAppts(), gcalRefresh()]);
+}
+async function gcalInit(){
+  await gcalRefresh(); await loadAppts();
+  if(gcalConnected) gcalSync(false);
+  clearInterval(syncTimer);
+  syncTimer = setInterval(() => { if(!document.hidden && currentUserId) gcalSync(false); }, 180000);
+}
+document.addEventListener('visibilitychange', () => { if(!document.hidden && currentUserId) scheduleSync(500); });
 
 /* init */
 (function(){
